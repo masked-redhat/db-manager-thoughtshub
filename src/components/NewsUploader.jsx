@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useToken } from "../providers/AdminTokenProvider";
 import { newsUploadUrl } from "../../constants/server";
+import handler from "../../pages/api/fetch-data";
 
 export default function NewsForm() {
   const { token } = useToken();
@@ -30,7 +31,7 @@ export default function NewsForm() {
     setLoading(true);
 
     try {
-      const response = await fetch(newsUploadUrl, {
+      const response = await handler(newsUploadUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

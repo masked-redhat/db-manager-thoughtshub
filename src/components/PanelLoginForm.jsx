@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { loginAdminUrl } from "../../constants/server.js";
 import { useToken } from "../providers/AdminTokenProvider.jsx";
 import Cookies from "js-cookie";
+import handler from "../../pages/api/fetch-data.js";
 
 const PanelLoginForm = () => {
   const { set } = useToken();
@@ -19,7 +20,7 @@ const PanelLoginForm = () => {
 
   const checkAdmin = async () => {
     try {
-      let response = await fetch(loginAdminUrl, {
+      let response = await handler(loginAdminUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
