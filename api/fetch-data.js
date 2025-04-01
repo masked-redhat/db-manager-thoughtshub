@@ -20,10 +20,10 @@ export default async function handler(req, res) {
     });
 
     // Forward the response from the API to the client
-    const data = await response.text();
-    res.status(response.status).send(data);
+    const data = await response.json();
+    res.status(response.status).json(data);
   } catch (error) {
     console.error("Proxy error:", error);
-    res.status(500).json({ error: "Proxy error" });
+    res.status(500).json({ error: "Proxy error", success: false });
   }
 }
