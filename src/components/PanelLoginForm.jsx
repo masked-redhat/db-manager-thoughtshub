@@ -19,14 +19,11 @@ const PanelLoginForm = () => {
 
   const checkAdmin = async () => {
     try {
-      let response = await fetch(
-        `/api/fetch-data?url=${encodeURIComponent(loginAdminUrl)}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
-        }
-      );
+      let response = await fetch("/api/proxy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password, url: loginAdminUrl }),
+      });
 
       response = await response.json();
       return response;

@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     const data = await response.json();
     res.status(response.status).json(data);
   } catch (error) {
-    console.error("Proxy error:", error);
+    console.log("Proxy error:", error);
     res.status(500).json({ error: "Proxy error", success: false });
   }
 }

@@ -30,17 +30,14 @@ export default function NewsForm() {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        `/api/fetch-data?url=${encodeURIComponent(newsUploadUrl)}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            auth_token: token,
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch("/api/proxy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          auth_token: token,
+        },
+        body: JSON.stringify({ ...formData, url: newsUploadUrl }),
+      });
 
       const result = await response.json();
       console.log(result);
