@@ -19,13 +19,10 @@ const PanelLoginForm = () => {
 
   const checkAdmin = async () => {
     try {
-      let response = await fetch("/api/handler", {
-        body: {
-          url: loginAdminUrl,
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
-        },
+      let response = await fetch(`/api/fetch-data?url=${loginAdminUrl}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
 
       response = await response.json();

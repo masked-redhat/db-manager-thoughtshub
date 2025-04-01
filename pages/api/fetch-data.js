@@ -1,0 +1,29 @@
+// api/proxy.js
+export default async function handler(req, res) {
+  // Extract the target URL from query parameters or body
+  const targetUrl = req.query.url || req.body.url;
+
+  if (!targetUrl) {
+    return res.status(400).json({ error: "Missing target URL" });
+  }
+
+  try {
+    // Forward the request to the target API
+    const response = await fetch(targetUrl, {
+      method: req.method,
+      headers: {
+        ...req.headers,
+        host: new URL(targetUrl).host, // Set appropriate host header
+      },
+      body:
+        req.method !== "GET" && req.method !== "HEAD" ? req.body : undefined,
+    });
+
+    // Forward the response from the API to the client
+    const data = await response.text();
+    res.status(response.status).send(data);
+  } catch (error) {
+    console.error("Proxy error:", error);
+    res.status(500).json({ error: "Proxy error" });
+  }
+}
