@@ -1,4 +1,3 @@
-// api/proxy.js
 export default async function handler(req, res) {
   // Extract the target URL from query parameters or body
   const targetUrl = req.query.url || req.body.url;
