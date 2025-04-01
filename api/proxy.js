@@ -11,8 +11,8 @@ export default async function handler(req, res) {
     const response = await fetch(targetUrl, {
       method: req.method,
       headers: {
-        ...req.headers,
-        host: new URL(targetUrl).host, // Set appropriate host header
+        "Content-Type": req.headers["Content-Type"],
+        auth_token: req.headers.auth_token ?? null,
       },
       body:
         req.method !== "GET" && req.method !== "HEAD" ? req.body : undefined,
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     const data = await response.json();
     res.status(response.status).json(data);
   } catch (error) {
-    console.log("Proxy error:", error);
+    console.error("Proxy error:", error);
     res.status(500).json({ error: "Proxy error", success: false });
   }
 }
