@@ -9,6 +9,8 @@ export default async function handler(req, res) {
     });
     const data = await response.json(); // Assuming JSON response from API
 
+    console.log(data);
+
     return res.json(data);
   } catch (error) {
     return res.json({ success: false });
