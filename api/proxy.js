@@ -1,28 +1,52 @@
 export default async function handler(req, res) {
-  // Extract the target URL from query parameters or body
-  const targetUrl = JSON.parse(req.body).url;
+  // Check if body exists and is already parsed
+  const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+
+  // Extract the target URL
+  const targetUrl = body?.url;
 
   if (!targetUrl) {
     return res.status(400).json({ error: "Missing target URL" });
   }
 
   try {
+    // Prepare headers
+    const headers = {
+      "Content-Type":
+        req.headers["content-type"] || req.headers["Content-Type"],
+    };
+
+    // Only add auth_token if it exists
+    if (req.headers.auth_token) {
+      headers.auth_token = req.headers.auth_token;
+    }
+
     // Forward the request to the target API
     const response = await fetch(targetUrl, {
       method: req.method,
-      headers: {
-        "Content-Type": req.headers["Content-Type"],
-        auth_token: req.headers.auth_token ?? null,
-      },
+      headers,
       body:
         req.method !== "GET" && req.method !== "HEAD" ? req.body : undefined,
     });
 
-    // Forward the response from the API to the client
+    // Handle response
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("API Error:", errorData);
+      return res.status(response.status).json({
+        error: `API returned ${response.status}`,
+        details: errorData,
+      });
+    }
+
     const data = await response.json();
-    res.status(response.status).json(data);
+    return res.status(response.status).json(data);
   } catch (error) {
-    console.error("Proxy error:", error);
-    res.status(500).json({ error: "Proxy error", success: false });
+    console.error("Proxy error:", error.message);
+    return res.status(500).json({
+      error: "Proxy error",
+      message: error.message,
+      success: false,
+    });
   }
 }
