@@ -1,14 +1,22 @@
-import { useState } from "react";
+import React from "react";
+import { useToken } from "./providers/AdminTokenProvider";
+import PanelHeader from "./components/PanelHeader";
+import PanelLoginForm from "./components/PanelLoginForm";
+import Cookies from "js-cookie";
 
-function App() {
-  const [count, setCount] = useState(0);
+const App = () => {
+  const { token, set } = useToken();
 
   return (
     <>
-      <h1>Database Manager - Thoughts Hub</h1>
-      <p>Available soon</p>
+      <PanelHeader />
+      {token === null ? (
+        <PanelLoginForm />
+      ) : (
+        <div className="flex w-full justify-center items-center">there could be news right now!!</div>
+      )}
     </>
   );
-}
+};
 
 export default App;
