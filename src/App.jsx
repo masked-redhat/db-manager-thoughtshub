@@ -3,6 +3,7 @@ import { useToken } from "./providers/AdminTokenProvider";
 import PanelHeader from "./components/PanelHeader";
 import PanelLoginForm from "./components/PanelLoginForm";
 import Cookies from "js-cookie";
+import NewsUploader from "./components/NewsUploader";
 
 const App = () => {
   const { token, set } = useToken();
@@ -13,7 +14,9 @@ const App = () => {
       {token === null ? (
         <PanelLoginForm />
       ) : (
-        <div className="flex w-full justify-center items-center">there could be news right now!!</div>
+        <div className="flex w-full justify-center items-center">
+          <NewsUploader />
+        </div>
       )}
     </>
   );
