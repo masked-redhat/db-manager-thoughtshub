@@ -1,4 +1,5 @@
-import formidable from "formidable";
+import { formidable } from "formidable";
+import FormData from "form-data";
 import fs from "fs";
 
 export const config = {
@@ -24,7 +25,7 @@ export default async function handler(req, res) {
   console.log("Proxying to:", targetUrl);
 
   try {
-    const form = formidable({ keepExtensions: true }); // ✅ Correct way to use formidable
+    const form = formidable({ keepExtensions: true });
 
     form.parse(req, async (err, fields, files) => {
       if (err) {
@@ -32,26 +33,28 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: "File parsing error" });
       }
 
-      const file = files.file; // Assuming frontend sends the file under "file"
+      const file = files.file?.[0]; // Ensure file field is correctly named
       if (!file) {
         return res.status(400).json({ error: "No file uploaded" });
       }
 
-      // Read file content
+      console.log("File received in Vercel:", file);
+
       const fileStream = fs.createReadStream(file.filepath);
 
-      // Create FormData to send to backend
+      // ✅ Prepare FormData to send to backend
       const formData = new FormData();
       formData.append("file", fileStream, file.originalFilename);
 
-      // Forward request to your backend
-      const backendResponse = await fetch(targetUrl, {
+      // ✅ Forward request to backend
+      const backendResponse = await fetch("https://your-backend.com/upload", {
         method: "POST",
         body: formData,
-        headers: formData.getHeaders(), // Ensure correct headers
+        headers: formData.getHeaders(), // ✅ Ensure headers are correct
       });
 
       const backendData = await backendResponse.json();
+      console.log(backendData);
       res.status(backendResponse.status).json(backendData);
     });
   } catch (error) {
