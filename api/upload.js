@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export default async function handler(req, res) {
   try {
     // Debugging: Log the incoming request
@@ -29,7 +31,9 @@ export default async function handler(req, res) {
     }
 
     // Make the proxied request
-    const response = await fetch(targetUrl, fetchOptions);
+    const response = await axios.post(targetUrl, fetchOptions.body, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
 
     // Handle the response
     if (!response.ok) {
