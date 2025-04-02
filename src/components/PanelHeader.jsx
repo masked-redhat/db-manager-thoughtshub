@@ -1,7 +1,8 @@
 import React from "react";
 import { useToken } from "../providers/AdminTokenProvider";
-import { logoutUrl } from "../../constants/server";
+import { logoutUrl, proxyUrl } from "../../constants/server";
 import Cookies from "js-cookie";
+import { inProduction } from "../../constants/env";
 
 const PanelHeader = () => {
   const { token, set } = useToken();
@@ -18,8 +19,9 @@ const PanelHeader = () => {
           <button
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-3.5 py-1.5 text-center"
             onClick={() => {
-              fetch(`/api/proxy?url=${encodeURIComponent(logoutUrl)}`, {
+              fetch(inProduction() ? proxyUrl : logoutUrl, {
                 headers: { auth_token: token },
+                body: JSON.stringify({ url: logoutUrl }),
               });
               Cookies.remove("auth_token");
               set(null);

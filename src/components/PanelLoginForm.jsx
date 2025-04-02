@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { loginAdminUrl } from "../../constants/server.js";
+import { loginAdminUrl, proxyUrl } from "../../constants/server.js";
 import { useToken } from "../providers/AdminTokenProvider.jsx";
 import Cookies from "js-cookie";
+import { inProduction } from "../../constants/env.js";
 
 const PanelLoginForm = () => {
   const { set } = useToken();
@@ -19,7 +20,7 @@ const PanelLoginForm = () => {
 
   const checkAdmin = async () => {
     try {
-      let response = await fetch("/api/proxy", {
+      let response = await fetch(inProduction() ? proxyUrl : loginAdminUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password, url: loginAdminUrl }),
