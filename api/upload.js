@@ -18,13 +18,7 @@ export default async function handler(req, res) {
     // Prepare fetch options
     const fetchOptions = {
       method: req.method,
-      headers: {},
     };
-
-    // Add auth header if present
-    if (req.headers.auth_token) {
-      fetchOptions.headers.auth_token = req.headers.auth_token;
-    }
 
     // Handle body for non-GET requests
     if (req.method !== "GET" && req.method !== "HEAD") {

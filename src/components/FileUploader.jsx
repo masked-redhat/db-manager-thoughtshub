@@ -25,7 +25,7 @@ export default function FileUploader({
     formData.append("file", file);
     const response = await fetch(
       inProduction() ? `${proxyUploadUrl}?url=${uploadUrl}` : uploadUrl,
-      { method: "POST", headers: { auth_token: token }, body: formData }
+      { method: "POST", body: formData }
     );
 
     const result = await response.json();
