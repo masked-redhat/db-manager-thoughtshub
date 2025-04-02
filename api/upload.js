@@ -18,6 +18,9 @@ export default async function handler(req, res) {
     // Prepare fetch options
     const fetchOptions = {
       method: req.method,
+      headers: {
+        "Content-Type": req.headers["Content-Type"],
+      },
     };
 
     // Handle body for non-GET requests
