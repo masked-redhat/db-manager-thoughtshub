@@ -2,9 +2,12 @@ import { useState } from "react";
 import { useToken } from "../providers/AdminTokenProvider";
 import { newsUploadUrl, proxyUrl } from "../../constants/server";
 import { inProduction } from "../../constants/env";
+import FileUploader from "./FileUploader";
 
 export default function NewsForm() {
   const { token } = useToken();
+  const [file, setFile] = useState(null);
+  const [uploaded, setUploaded] = useState(false);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -13,6 +16,7 @@ export default function NewsForm() {
     category: "",
     newsUrl: "",
   });
+  const [fileUrl, setFileUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState(null);
 
@@ -30,6 +34,12 @@ export default function NewsForm() {
     e.preventDefault();
     setLoading(true);
 
+    const newsData = { ...formData };
+    newsData.imageUrl = fileUrl;
+    setFormData(newsData);
+    console.log(newsData);
+    console.log(fileUrl);
+
     try {
       const response = await fetch(inProduction() ? proxyUrl : newsUploadUrl, {
         method: "POST",
@@ -37,7 +47,7 @@ export default function NewsForm() {
           "Content-Type": "application/json",
           auth_token: token,
         },
-        body: JSON.stringify({ ...formData, url: newsUploadUrl }),
+        body: JSON.stringify({ ...newsData, url: newsUploadUrl }),
       });
 
       const result = await response.json();
@@ -51,6 +61,8 @@ export default function NewsForm() {
           category: "",
           newsUrl: "",
         });
+        setFile(null);
+        setUploaded(false);
         setNotification({
           type: "success",
           message: "News submitted successfully!",
@@ -102,13 +114,15 @@ export default function NewsForm() {
             placeholder="Body"
             required
           />
-          <input
-            className="w-full p-2 border rounded"
-            name="imageUrl"
-            value={formData.imageUrl}
-            onChange={handleChange}
-            placeholder="Image URL"
+
+          <FileUploader
+            setUrl={setFileUrl}
+            file={file}
+            setFile={setFile}
+            uploaded={uploaded}
+            setUploaded={setUploaded}
           />
+
           <input
             className="w-full p-2 border rounded"
             name="category"

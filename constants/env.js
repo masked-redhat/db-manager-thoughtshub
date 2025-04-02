@@ -1,3 +1,3 @@
-export const production = false;
+export const production = true;
 
 export const inProduction = () => production === true;
