@@ -1,5 +1,5 @@
 import formidable from "formidable";
-import fs from "fs"
+import fs from "fs";
 
 export const config = {
   api: {
@@ -23,40 +23,39 @@ export default async function handler(req, res) {
 
   console.log("Proxying to:", targetUrl);
 
-  const form = new formidable.IncomingForm();
-  form.keepExtensions = true; // Keep file extensions
+  try {
+    const form = formidable({ keepExtensions: true }); // ✅ Correct way to use formidable
 
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      console.error("Error parsing file:", err);
-      return res.status(500).json({ error: "File parsing error" });
-    }
+    form.parse(req, async (err, fields, files) => {
+      if (err) {
+        console.error("Error parsing file:", err);
+        return res.status(500).json({ error: "File parsing error" });
+      }
 
-    const file = files.file; // Assuming the frontend sends the file under "file"
-    if (!file) {
-      return res.status(400).json({ error: "No file uploaded" });
-    }
+      const file = files.file; // Assuming frontend sends the file under "file"
+      if (!file) {
+        return res.status(400).json({ error: "No file uploaded" });
+      }
 
-    // Read file content
-    const fileStream = fs.createReadStream(file.filepath);
+      // Read file content
+      const fileStream = fs.createReadStream(file.filepath);
 
-    // Create a new FormData object to send to your backend
-    const formData = new FormData();
-    formData.append("file", fileStream, file.originalFilename);
+      // Create FormData to send to backend
+      const formData = new FormData();
+      formData.append("file", fileStream, file.originalFilename);
 
-    // Forward the request to your backend
-    try {
+      // Forward request to your backend
       const backendResponse = await fetch(targetUrl, {
         method: "POST",
         body: formData,
-        headers: formData.getHeaders(), // Automatically set correct headers
+        headers: formData.getHeaders(), // Ensure correct headers
       });
 
       const backendData = await backendResponse.json();
       res.status(backendResponse.status).json(backendData);
-    } catch (error) {
-      console.error("Error forwarding request:", error);
-      res.status(500).json({ error: "Error forwarding request" });
-    }
-  });
+    });
+  } catch (error) {
+    console.error("Proxy error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 }
