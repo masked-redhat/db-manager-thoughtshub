@@ -3,7 +3,13 @@ import { inProduction } from "../../constants/env";
 import { apiUrl, proxyUploadUrl, uploadUrl } from "../../constants/server";
 import { useToken } from "../providers/AdminTokenProvider";
 
-export default function FileUploader({ setUrl, file, setFile, uploaded, setUploaded }) {
+export default function FileUploader({
+  setUrl,
+  file,
+  setFile,
+  uploaded,
+  setUploaded,
+}) {
   const { token } = useToken();
 
   const handleFileChange = (event) => {
@@ -17,11 +23,10 @@ export default function FileUploader({ setUrl, file, setFile, uploaded, setUploa
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);
-    const response = await fetch(inProduction() ? proxyUploadUrl : uploadUrl, {
-      method: "POST",
-      headers: { auth_token: token },
-      body: formData,
-    });
+    const response = await fetch(
+      inProduction() ? `${proxyUploadUrl}?url=${uploadUrl}` : uploadUrl,
+      { method: "POST", headers: { auth_token: token }, body: formData }
+    );
 
     const result = await response.json();
     console.log(result);
