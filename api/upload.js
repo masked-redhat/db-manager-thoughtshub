@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     const fetchOptions = {
       method: req.method,
       headers: {
-        "Content-Type": req.headers["Content-Type"],
+        "Content-Type": "multipart/form-data",
       },
     };
 
