@@ -1,4 +1,4 @@
-import { apiUrl, uploadUrl } from "../../constants/server";
+import { uploadUrl } from "../../constants/server";
 import { useToken } from "../providers/AdminTokenProvider";
 
 export default function FileUploader({
@@ -21,12 +21,16 @@ export default function FileUploader({
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);
-    const response = await fetch(uploadUrl, { method: "POST", body: formData });
+    const response = await fetch(uploadUrl, {
+      method: "POST",
+      headers: { auth_token: token },
+      body: formData,
+    });
 
     const result = await response.json();
     console.log(result);
     if (response.ok) {
-      setUrl(`${apiUrl}${result.fileUrl}`);
+      setUrl(`${window.location.origin}${result.fileUrl}`);
       setUploaded(true);
     }
   };
