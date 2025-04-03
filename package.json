@@ -13,6 +13,7 @@
         "@tailwindcss/vite": "^4.0.17",
         "axios": "^1.8.4",
         "db-manager": "file:",
+        "dotenv": "^16.4.7",
         "formidable": "^3.5.2",
         "js-cookie": "^3.0.5",
         "react": "^19.0.0",

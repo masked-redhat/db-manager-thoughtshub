@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { loginAdminUrl, proxyUrl } from "../../constants/server.js";
+import { loginAdminUrl } from "../../constants/server.js";
 import { useToken } from "../providers/AdminTokenProvider.jsx";
 import Cookies from "js-cookie";
-import { inProduction } from "../../constants/env.js";
 
 const PanelLoginForm = () => {
   const { set } = useToken();

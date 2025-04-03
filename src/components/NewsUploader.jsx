@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useToken } from "../providers/AdminTokenProvider";
-import { newsUploadUrl, proxyUrl } from "../../constants/server";
-import { inProduction } from "../../constants/env";
+import { newsUploadUrl } from "../../constants/server";
 import FileUploader from "./FileUploader";
 
 export default function NewsForm() {

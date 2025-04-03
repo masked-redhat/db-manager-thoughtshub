@@ -1,8 +1,7 @@
 import React from "react";
 import { useToken } from "../providers/AdminTokenProvider";
-import { logoutUrl, proxyUrl } from "../../constants/server";
+import { logoutUrl } from "../../constants/server";
 import Cookies from "js-cookie";
-import { inProduction } from "../../constants/env";
 
 const PanelHeader = () => {
   const { token, set } = useToken();

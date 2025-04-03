@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { inProduction } from "../../constants/env";
-import { apiUrl, proxyUploadUrl, uploadUrl } from "../../constants/server";
+import { apiUrl, uploadUrl } from "../../constants/server";
 import { useToken } from "../providers/AdminTokenProvider";
 
 export default function FileUploader({
