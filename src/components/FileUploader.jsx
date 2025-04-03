@@ -23,10 +23,7 @@ export default function FileUploader({
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);
-    const response = await fetch(
-      inProduction() ? `${proxyUploadUrl}?url=${uploadUrl}` : uploadUrl,
-      { method: "POST", body: formData }
-    );
+    const response = await fetch(uploadUrl, { method: "POST", body: formData });
 
     const result = await response.json();
     console.log(result);

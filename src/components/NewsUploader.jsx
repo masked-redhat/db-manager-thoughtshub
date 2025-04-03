@@ -41,13 +41,13 @@ export default function NewsForm() {
     console.log(fileUrl);
 
     try {
-      const response = await fetch(inProduction() ? proxyUrl : newsUploadUrl, {
+      const response = await fetch(newsUploadUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           auth_token: token,
         },
-        body: JSON.stringify({ ...newsData, url: newsUploadUrl }),
+        body: JSON.stringify({ ...newsData }),
       });
 
       const result = await response.json();

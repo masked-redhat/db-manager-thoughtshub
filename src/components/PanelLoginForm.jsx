@@ -20,10 +20,10 @@ const PanelLoginForm = () => {
 
   const checkAdmin = async () => {
     try {
-      let response = await fetch(inProduction() ? proxyUrl : loginAdminUrl, {
+      let response = await fetch(loginAdminUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, url: loginAdminUrl }),
+        body: JSON.stringify({ username, password }),
       });
 
       response = await response.json();
