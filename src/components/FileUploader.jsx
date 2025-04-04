@@ -1,3 +1,4 @@
+import { apiUrl } from "../../constants/api_url";
 import { uploadUrl } from "../../constants/server";
 import { useToken } from "../providers/AdminTokenProvider";
 
@@ -30,7 +31,7 @@ export default function FileUploader({
     const result = await response.json();
     console.log(result);
     if (response.ok) {
-      setUrl(`${window.location.origin}${result.fileUrl}`);
+      setUrl(`${apiUrl}${result.fileUrl}`);
       setUploaded(true);
     }
   };
