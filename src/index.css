@@ -135,3 +135,40 @@
         @apply bg-background text-foreground;
     }
 }
+
+@keyframes loader {
+    0% {
+        transform: scaleX(0);
+    }
+
+    25% {
+        transform: scaleX(0.15);
+    }
+
+    50% {
+        transform: scaleX(0.35);
+    }
+
+    75% {
+        transform: scaleX(0.65);
+    }
+
+    100% {
+        transform: scaleX(0);
+    }
+}
+
+@keyframes going {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.animate-loader {
+    animation: loader 1s ease-in-out infinite, going 1s ease-in-out infinite;
+    transform-origin: left center;
+}

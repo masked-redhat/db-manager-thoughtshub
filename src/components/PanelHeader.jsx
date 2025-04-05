@@ -4,10 +4,12 @@ import { logoutUrl } from "../../constants/server";
 import { useToken } from "../providers/AdminTokenProvider";
 import { useDisabled } from "../providers/DIsableProvider";
 import Cookies from "js-cookie";
+import { useLoading } from "../providers/LoadingProvider";
 
 const PanelHeader = () => {
   const { token, setToken } = useToken();
   const { setDisabled } = useDisabled();
+  const { loading } = useLoading();
 
   const handleLogout = async () => {
     setDisabled(true);
@@ -31,7 +33,7 @@ const PanelHeader = () => {
   };
 
   return (
-    <header className="w-screen border flex items-center px-5 py-3 justify-between">
+    <header className="w-screen border flex items-center px-5 py-3 justify-between relative">
       <p
         id="logo"
         className="flex flex-col text-2xl font-semibold text-center w-fit"
@@ -49,6 +51,12 @@ const PanelHeader = () => {
           </li>
         </ul>
       </nav>
+
+      {loading && (
+        <div className="h-1 w-screen bg-gray-300 absolute bottom-0 left-0 overflow-hidden">
+          <div className="h-full bg-gray-500 animate-loader" />
+        </div>
+      )}
     </header>
   );
 };
