@@ -1,13 +1,16 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { checkAdminUrl } from "../../constants/server";
+import { useDisabled } from "./DIsableProvider";
 
 const AdminTokenContext = createContext();
 
 const AuthTokenProvider = ({ children }) => {
   const [authToken, setAuthToken] = useState(null);
+  const { setDisabled } = useDisabled();
 
   const checkAndApplyUserToken = async (authToken) => {
+    setDisabled(true);
     const response = await fetch(checkAdminUrl, {
       method: "GET",
       headers: { auth_token: authToken },
@@ -15,6 +18,7 @@ const AuthTokenProvider = ({ children }) => {
 
     const result = await response.json();
     if (result.success === true) setAuthToken(authToken);
+    setDisabled(false);
   };
 
   useEffect(() => {
@@ -25,7 +29,9 @@ const AuthTokenProvider = ({ children }) => {
   }, []);
 
   return (
-    <AdminTokenContext.Provider value={{ token: authToken, setToken: setAuthToken }}>
+    <AdminTokenContext.Provider
+      value={{ token: authToken, setToken: setAuthToken }}
+    >
       {children}
     </AdminTokenContext.Provider>
   );

@@ -10,14 +10,13 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { useDisabled } from "../providers/DIsableProvider";
 import { loginAdminUrl } from "../../constants/server";
 import { post } from "../../utils/request";
 import { useToken } from "../providers/AdminTokenProvider";
 import Cookies from "js-cookie";
 
 const LoginForm = () => {
-  const { disabled, setDisabled } = useDisabled();
+  const [disabled, setDisabled] = useState(false);
   const { setToken } = useToken();
 
   const [username, setUsername] = useState("");
@@ -38,7 +37,7 @@ const LoginForm = () => {
         console.log("Login Successful");
         Cookies.set("auth_token", result.auth_token);
         setToken(result.auth_token);
-      } else console.log("Error occured, Returned response: ", result);
+      } else console.log("Error occured, Returned response: ", result.message);
     } catch (err) {
       console.log("Error occured : ", err);
     } finally {
