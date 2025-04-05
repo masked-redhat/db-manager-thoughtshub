@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;700&family=Fira+Code:wght@300..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;700&family=Fira+Code:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Space+Grotesk:wght@300..700&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
 @import "tailwindcss";
 
@@ -12,11 +12,14 @@
     --font-fira: "Fira Code", "sans-serif";
     --font-roboto-mono: "Roboto Mono", "sans-serif";
     --font-urban: "Urbanist", "sans-serif";
+    --font-inter: "Inter", "sans-serif";
+    --font-manrope: "Manrope", "sans-serif";
+    --font-space-grotesk: "Space Grotesk", "sans-serif";
 }
 
 
 :root {
-    @apply font-urban;
+    @apply font-space-grotesk;
     --radius: 0.625rem;
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
