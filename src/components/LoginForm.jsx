@@ -16,10 +16,7 @@ const LoginForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleLogin}
-      className="flex flex-col items-center gap-4"
-    >
+    <form onSubmit={handleLogin} className="flex flex-col items-center gap-4">
       <Card>
         <CardHeader>
           <CardTitle>Login</CardTitle>
