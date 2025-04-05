@@ -1,25 +1,11 @@
 import React from "react";
 import { useToken } from "./providers/AdminTokenProvider";
-import PanelHeader from "./components/PanelHeader";
-import PanelLoginForm from "./components/PanelLoginForm";
-import Cookies from "js-cookie";
-import NewsUploader from "./components/NewsUploader";
+import Login from "./pages/Login";
 
 const App = () => {
   const { token, set } = useToken();
 
-  return (
-    <>
-      <PanelHeader />
-      {token === null ? (
-        <PanelLoginForm />
-      ) : (
-        <div className="flex w-full justify-center items-center">
-          <NewsUploader />
-        </div>
-      )}
-    </>
-  );
+  return <>{token ? <p>Logged In, token: {token}</p> : <Login />}</>;
 };
 
 export default App;
