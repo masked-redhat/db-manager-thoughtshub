@@ -25,7 +25,7 @@ const AuthTokenProvider = ({ children }) => {
   }, []);
 
   return (
-    <AdminTokenContext.Provider value={{ token: authToken, set: setAuthToken }}>
+    <AdminTokenContext.Provider value={{ token: authToken, setToken: setAuthToken }}>
       {children}
     </AdminTokenContext.Provider>
   );

@@ -14,4 +14,4 @@ const LoadingProvider = ({ children }) => {
 
 export default LoadingProvider;
 
-export const useToken = () => useContext(LoadingContext);
+export const useLoading = () => useContext(LoadingContext);

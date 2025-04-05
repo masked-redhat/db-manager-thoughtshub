@@ -3,10 +3,10 @@ import React, { createContext, useContext, useState } from "react";
 const DisableContext = createContext();
 
 const DisableProvider = ({ children }) => {
-  const [disable, setDisable] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   return (
-    <DisableContext.Provider value={{ disable, setDisable }}>
+    <DisableContext.Provider value={{ disabled, setDisabled }}>
       {children}
     </DisableContext.Provider>
   );
@@ -14,4 +14,4 @@ const DisableProvider = ({ children }) => {
 
 export default DisableProvider;
 
-export const useToken = () => useContext(DisableContext);
+export const useDisabled = () => useContext(DisableContext);
