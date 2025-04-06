@@ -33,7 +33,7 @@ const PanelHeader = () => {
   };
 
   return (
-    <header className="w-screen border flex items-center px-5 py-3 justify-between relative">
+    <header className="w-screen border flex items-center px-5 justify-between relative h-[4.8em]">
       <p
         id="logo"
         className="flex flex-col text-2xl font-semibold text-center w-fit"
