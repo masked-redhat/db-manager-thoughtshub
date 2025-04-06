@@ -68,7 +68,6 @@ const PanelCreateNews = () => {
     }
 
     setNewsUploading(false);
-    resetForm();
   };
 
   return (
