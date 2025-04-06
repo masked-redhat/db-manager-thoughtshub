@@ -7,12 +7,16 @@ import DisableProvider from "./providers/DIsableProvider.jsx";
 import LoadingProvider from "./providers/LoadingProvider.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import PanelHome from "./components/PanelHome.jsx";
+import PanelCreateNews from "./components/news/PanelCreateNews.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/dist",
     Component: App,
-    children: [{ index: true, Component: PanelHome }],
+    children: [
+      { index: true, Component: PanelHome },
+      { path: "create-news", Component: PanelCreateNews },
+    ],
   },
 ]);
 
