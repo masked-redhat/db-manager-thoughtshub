@@ -63,7 +63,7 @@ const PanelHomeSection = ({ title, data, load }) => {
         </Button>
       </header>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-row flex-wrap gap-4 mt-2">
         {data.map((news) => (
           <NewsCard news={news} key={news.id} />
         ))}
@@ -75,16 +75,16 @@ const PanelHomeSection = ({ title, data, load }) => {
 
 const NewsCard = ({ news }) => {
   return (
-    <div className="w-full lg:h-64 border border-gray-300 rounded-xl overflow-hidden shadow-md flex flex-col lg:flex-row p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+    <div className="lg:w-lg w-full h-max border border-gray-300 rounded-xl shadow-md flex flex-col p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white gap-4">
       {/* Image */}
       {news.imageUrl ? (
         <img
           src={news.imageUrl}
           alt="Error"
-          className="w-full lg:w-64 h-64 lg:h-full object-cover rounded-md mb-4 lg:mb-0 lg:mr-4 bg-black text-gray-500"
+          className="w-full h-64 object-contain rounded-md lg:mr-4 bg-black text-gray-500"
         />
       ) : (
-        <div className="w-full lg:w-64 h-40 lg:h-full bg-gray-200 flex items-center justify-center text-gray-500 text-sm rounded-md mb-4 lg:mb-0 lg:mr-4">
+        <div className="w-full lg:w-64 h-40 lg:h-full bg-gray-200 flex items-center justify-center text-gray-500 text-sm rounded-md lg:mr-4">
           No Image
         </div>
       )}
