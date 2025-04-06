@@ -116,8 +116,8 @@ const PanelCreateNews = () => {
             )}
           </Button>
         </div>
-        <Toaster />
       </form>
+      <Toaster />
     </section>
   );
 };
