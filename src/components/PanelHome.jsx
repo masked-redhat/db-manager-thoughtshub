@@ -75,7 +75,7 @@ const PanelHomeSection = ({ title, data, load }) => {
 
 const NewsCard = ({ news }) => {
   return (
-    <div className="w-full lg:h-64 border border-gray-300 rounded-xl overflow-hidden shadow-md flex flex-col lg:flex-row p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white relative">
+    <div className="w-full lg:h-64 border border-gray-300 rounded-xl overflow-hidden shadow-md flex flex-col lg:flex-row p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
       {/* Image */}
       {news.imageUrl ? (
         <img
@@ -94,7 +94,6 @@ const NewsCard = ({ news }) => {
         <div className="text-xs text-gray-500 break-all">
           {news.id.toUpperCase()}
         </div>
-        <Badge className="absolute bottom-6 left-6">{news.category}</Badge>
         <div className="text-2xl font-semibold">{news.title} </div>
 
         <div className="flex text-xs gap-3">
@@ -114,6 +113,8 @@ const NewsCard = ({ news }) => {
             </TooltipProvider>
           )}
         </div>
+        
+        <Badge>{news.category}</Badge>
 
         <div className="text-sm">{news.body}</div>
       </div>
