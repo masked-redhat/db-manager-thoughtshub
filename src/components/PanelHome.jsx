@@ -42,24 +42,32 @@ const PanelHome = () => {
         </span>
       ) : (
         <main>
-          <PanelHomeSection title="Latest News Uploaded" data={latestNews} />
+          <PanelHomeSection
+            title="Latest News Uploaded"
+            data={latestNews}
+            load={handleGetLatestNews}
+          />
         </main>
       )}
     </>
   );
 };
 
-const PanelHomeSection = ({ title, data }) => {
+const PanelHomeSection = ({ title, data, load }) => {
   return (
     <section className="flex flex-col gap-2">
-      <header>
+      <header className="flex gap-2 items-center">
         <h1 className="text-2xl font-bold">{title}</h1>
+        <Button onClick={load} className="cursor-pointer" variant="secondary">
+          Refresh
+        </Button>
       </header>
 
       <div className="flex flex-col gap-4">
         {data.map((news) => (
-          <NewsCard news={news} />
+          <NewsCard news={news} key={news.id} />
         ))}
+        {data.length !== 0 ? null : <p>No News Found</p>}
       </div>
     </section>
   );

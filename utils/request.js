@@ -1,4 +1,4 @@
-const requestWithoutBody = ["GET", "HEAD"];
+const requestWithoutBody = ["GET", "HEAD", "DELETE"];
 
 export const post = (url, body) => {
   return fetch(url, {
