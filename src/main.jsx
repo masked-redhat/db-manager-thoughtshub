@@ -8,6 +8,7 @@ import LoadingProvider from "./providers/LoadingProvider.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import PanelHome from "./components/PanelHome.jsx";
 import PanelCreateNews from "./components/news/PanelCreateNews.jsx";
+import PanelNews from "./components/news/PanelNews.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, Component: PanelHome },
       { path: "create-news", Component: PanelCreateNews },
+      { path: "news", Component: PanelNews },
     ],
   },
 ]);

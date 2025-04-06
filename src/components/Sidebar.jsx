@@ -37,7 +37,9 @@ const Sidebar = () => {
       <hr />
 
       <SideBarGroup title="News">
-        <li>News</li>
+        <NavLink to="news" end>
+          News
+        </NavLink>
         <NavLink to="create-news" end>
           Create News
         </NavLink>
@@ -52,6 +54,8 @@ const Sidebar = () => {
         <li>Warnings</li>
         <li>Errors</li>
       </SideBarGroup>
+
+      <Toaster />
     </nav>
   );
 };
@@ -113,8 +117,6 @@ const DeleteAllNews = () => {
           )}
           <DialogClose>
             <Button variant="secondary">Close</Button>
-
-            <Toaster />
           </DialogClose>
         </DialogFooter>
       </DialogContent>
