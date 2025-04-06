@@ -7,6 +7,8 @@ import {
 } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Sidebar from "../components/Sidebar";
+import PanelHome from "../components/PanelHome";
+import { Outlet } from "react-router";
 
 const Panel = () => {
   return (
@@ -20,7 +22,9 @@ const Panel = () => {
             </ScrollArea>
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel className="min-w-[50%] p-2">Two</ResizablePanel>
+          <ResizablePanel className="min-w-[50%] p-3">
+            <Outlet />
+          </ResizablePanel>
         </ResizablePanelGroup>
       </main>
     </>
