@@ -144,8 +144,8 @@ const SelectCategory = ({ category, setCategory }) => {
       <SelectContent>
         {categories.map((c) => {
           return (
-            <SelectItem key={c} value={c}>
-              {c}
+            <SelectItem key={c.name} value={c.name}>
+              {c.name}
             </SelectItem>
           );
         })}

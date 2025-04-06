@@ -9,6 +9,8 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import PanelHome from "./components/PanelHome.jsx";
 import PanelCreateNews from "./components/news/PanelCreateNews.jsx";
 import PanelNews from "./components/news/PanelNews.jsx";
+import PanelGetCategories from "./components/category/PanelGetCategories.jsx";
+import PanelCreateCategory from "./components/category/PanelCreateCategory.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,8 @@ const router = createBrowserRouter([
       { index: true, Component: PanelHome },
       { path: "create-news", Component: PanelCreateNews },
       { path: "news", Component: PanelNews },
+      { path: "categories", Component: PanelGetCategories },
+      { path: "create-new-category", Component: PanelCreateCategory },
     ],
   },
 ]);

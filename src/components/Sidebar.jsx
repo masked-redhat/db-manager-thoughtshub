@@ -48,6 +48,17 @@ const Sidebar = () => {
 
       <hr />
 
+      <SideBarGroup title="News Category">
+        <NavLink to="categories" end>
+          Categories
+        </NavLink>
+        <NavLink to="create-new-category" end>
+          Create New
+        </NavLink>
+      </SideBarGroup>
+
+      <hr />
+
       <SideBarGroup title="Logs">
         <li>Logs</li>
         <li>Infos</li>
@@ -103,8 +114,8 @@ const DeleteAllNews = () => {
         <DialogHeader>
           <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            This action cannot be undone. This will permanently delete all the
+            news data from our servers.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-start">

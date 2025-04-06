@@ -8,3 +8,4 @@ export const uploadUrl = `${apiUrl}/upload`;
 export const getNewsUrl = `${apiUrl}/news`;
 export const getCategoriesUrl = `${apiUrl}/categories`;
 export const deleteAllNewsUrl = `${apiUrl}/admin/all/news`;
+export const createCategoryUrl = `${apiUrl}/admin/categories`;
