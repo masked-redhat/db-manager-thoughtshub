@@ -22,3 +22,10 @@ export const requestAuth = (url, method, token, body = {}) => {
       : { body: JSON.stringify(body) }),
   });
 };
+
+export const uploadAuth = (url, body) => {
+  return fetch(url, {
+    method: "POST",
+    body,
+  });
+};
