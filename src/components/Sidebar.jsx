@@ -10,10 +10,9 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-
 import { Button } from "@/components/ui/button";
 import { requestAuth } from "../../utils/request";
-import { deleteAllNewsUrl } from "../../constants/server";
+import { deleteAllForumsUrl, deleteAllNewsUrl } from "../../constants/server";
 import { useToken } from "../providers/AdminTokenProvider";
 import { toast, Toaster } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -32,6 +31,7 @@ const Sidebar = () => {
       <SideBarGroup title="Forums">
         <li>Forums</li>
         <li>Create Forum</li>
+        <DeleteAllForums />
       </SideBarGroup>
 
       <hr />
@@ -84,6 +84,54 @@ const SideBarGroup = ({ title, children }) => {
         </ul>
       </div>
     </section>
+  );
+};
+
+const DeleteAllForums = () => {
+  const { token } = useToken();
+  const [deleting, setDeleting] = useState(false);
+
+  const handleDeleteAllForums = async () => {
+    setDeleting(true);
+
+    try {
+      const response = await requestAuth(deleteAllForumsUrl, "DELETE", token);
+
+      if (response.ok) toast("Deleted All Forums");
+    } catch (err) {
+      toast("Error occured");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  return (
+    <Dialog>
+      <DialogTrigger>
+        <p className="text-left">Delete All Forums</p>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogDescription>
+            This action cannot be undone. This will permanently delete all the
+            forums data from our servers.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="sm:justify-start">
+          {deleting ? (
+            <Button disabled>
+              <Loader2 className="animate-spin" /> Please wait...
+            </Button>
+          ) : (
+            <Button onClick={handleDeleteAllForums}>Delete</Button>
+          )}
+          <DialogClose>
+            <Button variant="secondary">Close</Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

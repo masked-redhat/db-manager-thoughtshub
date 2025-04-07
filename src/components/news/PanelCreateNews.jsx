@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { requestAuth, uploadAuth } from "../../../utils/request";
-import {
-  getCategoriesUrl,
-  newsUploadUrl,
-  uploadUrl,
-} from "../../../constants/server";
+import { newsUploadUrl, uploadUrl } from "../../../constants/server";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,15 +11,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useToken } from "../../providers/AdminTokenProvider";
 import { toast, Toaster } from "sonner";
+import SelectCategory from "../select/SelectCategory";
 
 const PanelCreateNews = () => {
   const { token } = useToken();
@@ -119,38 +109,6 @@ const PanelCreateNews = () => {
       </form>
       <Toaster />
     </section>
-  );
-};
-
-const SelectCategory = ({ category, setCategory }) => {
-  const [categories, setCategories] = useState([]);
-  const fetchCategoriesAndSet = async () => {
-    const response = await fetch(getCategoriesUrl);
-
-    const result = await response.json();
-    if (response.ok) setCategories(result.categories);
-  };
-
-  useEffect(() => {
-    fetchCategoriesAndSet();
-    return () => {};
-  }, []);
-
-  return (
-    <Select value={category} onValueChange={setCategory}>
-      <SelectTrigger className="w-full">
-        <SelectValue placeholder="Category" />
-      </SelectTrigger>
-      <SelectContent>
-        {categories.map((c) => {
-          return (
-            <SelectItem key={c.name} value={c.name}>
-              {c.name}
-            </SelectItem>
-          );
-        })}
-      </SelectContent>
-    </Select>
   );
 };
 
