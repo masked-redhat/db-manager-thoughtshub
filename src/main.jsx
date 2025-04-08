@@ -13,6 +13,8 @@ import PanelGetCategories from "./components/category/PanelGetCategories.jsx";
 import PanelCreateCategory from "./components/category/PanelCreateCategory.jsx";
 import PanelForums from "./components/forums/PanelForums.jsx";
 import PanelCreateForum from "./components/forums/PanelCreateForum.jsx";
+import PanelUsers from "./components/users/PanelUsers.jsx";
+import PanelCreateUser from "./components/users/PanelCreateUser.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,8 @@ const router = createBrowserRouter([
       { path: "create-new-category", Component: PanelCreateCategory },
       { path: "forums", Component: PanelForums },
       { path: "create-forums", Component: PanelCreateForum },
+      { path: "users", Component: PanelUsers },
+      { path: "create-user", Component: PanelCreateUser },
     ],
   },
 ]);

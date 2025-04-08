@@ -29,8 +29,12 @@ const Sidebar = () => {
       <hr />
 
       <SideBarGroup title="Users">
-        <li>Users</li>
-        <li>Create New</li>
+        <NavLink to="users" end>
+          Users
+        </NavLink>
+        <NavLink to="create-user" end>
+          Create New
+        </NavLink>
       </SideBarGroup>
 
       <hr />
