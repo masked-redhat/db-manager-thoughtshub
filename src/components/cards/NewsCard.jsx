@@ -9,7 +9,7 @@ import {
 
 const NewsCard = ({ data }) => {
   return (
-    <div className="lg:w-lg w-full h-max border border-gray-300 rounded-xl shadow-md flex flex-col p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white gap-4">
+    <div className="lg:w-lg w-full border border-gray-300 rounded-xl shadow-md flex flex-col p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white gap-4">
       {/* Image */}
       {data.imageUrl ? (
         <img
