@@ -20,3 +20,4 @@ export const upvoteForumsUrl = `${apiUrl}/forums/upvote`;
 export const deleteForumUrl = `${apiUrl}/admin/forums`;
 export const getUsersCountUrl = `${apiUrl}/admin/users/pages`;
 export const getUsersUrl = `${apiUrl}/admin/users`;
+export const checkUsernameUrl = `${apiUrl}/check-username`;
