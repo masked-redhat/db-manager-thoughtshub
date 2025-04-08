@@ -8,17 +8,19 @@ const WriterCard = ({ data }) => {
         <img
           src={data.profileImageUrl}
           alt="Error"
-          className="w-12 h-12 rounded-full"
+          className="w-11 h-11 rounded-full"
         />
       ) : (
-        <div className="flex items-center justify-center bg-black text-white w-12 h-12 rounded-full capitalize select-none">
+        <div className="flex items-center justify-center bg-black text-white w-11 h-11 rounded-full capitalize select-none">
           {data.fullName[0]}
         </div>
       )}
 
-      <div className="flex flex-col gap-0">
-        <p className="font-bold text-lg">{data.fullName}</p>
-        <p className="text-xs font-inter">@{data.username}</p>
+      <div className="flex flex-col items-center justify-center w-fit">
+        <p className="font-bold text-lg -mb-1">{data.fullName}</p>
+        <p className="text-xs font-inter flex items-center gap-1">
+          <span className="font-bold">@</span> {data.username}
+        </p>
       </div>
     </div>
   );

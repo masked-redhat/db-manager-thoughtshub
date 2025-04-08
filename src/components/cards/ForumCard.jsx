@@ -14,6 +14,7 @@ import { useToken } from "../../providers/AdminTokenProvider";
 import { upvoteForumsUrl } from "../../../constants/server";
 import { Loader2 } from "lucide-react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ForumCard = ({ data }) => {
   const { token } = useToken();
@@ -85,9 +86,9 @@ const ForumCard = ({ data }) => {
           )}
         </div>
 
-        <div className="text-sm">{data.body}</div>
+        <ScrollArea className="text-sm h-[150px]">{data.body}</ScrollArea>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 mt-auto">
           <Button
             variant="secondary"
             className="rounded-full py-2 w-14 text-lg cursor-pointer"

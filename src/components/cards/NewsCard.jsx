@@ -6,6 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const NewsCard = ({ data }) => {
   return (
@@ -50,7 +51,7 @@ const NewsCard = ({ data }) => {
 
         <Badge>{data.category}</Badge>
 
-        <div className="text-sm">{data.body}</div>
+        <ScrollArea className="text-sm h-[150px]">{data.body}</ScrollArea>
       </div>
     </div>
   );
