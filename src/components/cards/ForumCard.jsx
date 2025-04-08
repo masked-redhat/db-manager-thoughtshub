@@ -58,7 +58,7 @@ const ForumCard = ({ data, fetchForums }) => {
           className="w-full h-64 object-contain rounded-md lg:mr-4 bg-black text-gray-500"
         />
       ) : (
-        <div className="w-full lg:w-64 h-40 lg:h-full bg-gray-200 flex items-center justify-center text-gray-500 text-sm rounded-md lg:mr-4">
+        <div className="w-full lg:w-64 bg-gray-200 flex items-center justify-center text-gray-500 text-sm rounded-md lg:mr-4">
           No Image
         </div>
       )}
