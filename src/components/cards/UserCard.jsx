@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import { useToken } from "../../providers/AdminTokenProvider";
 import { Badge } from "@/components/ui/badge";
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import { requestAuth } from "../../../utils/request";
 
 const UserCard = ({ data, fetchUsers }) => {
   const { token } = useToken();
@@ -42,7 +43,9 @@ const UserCard = ({ data, fetchUsers }) => {
             }
           }
         />
-        <ActionBtn userId={data.id} fetchUsers={fetchUsers} token={token} />
+        {data?.username === "admin" ? null : (
+          <ActionBtn userId={data.id} fetchUsers={fetchUsers} token={token} />
+        )}
       </div>
 
       <div className="flex flex-wrap gap-2 items-center">
@@ -123,7 +126,11 @@ const ActionBtn = ({ userId, token, fetchUsers }) => {
   const handleDeleteUser = async () => {
     setDeleting(true);
 
-    const response = await requestAuth(getUsersUrl, "DELETE", token);
+    const response = await requestAuth(
+      getUsersUrl + `?userId=${userId}`,
+      "DELETE",
+      token
+    );
 
     if (response.ok) {
       toast("User Deleted");

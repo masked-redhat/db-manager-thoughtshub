@@ -18,7 +18,7 @@ import PanelCreateUser from "./components/users/PanelCreateUser.jsx";
 
 const router = createBrowserRouter([
   {
-    path: "/admin-panel",
+    path: "/dist",
     Component: App,
     children: [
       { index: true, Component: PanelHome },
