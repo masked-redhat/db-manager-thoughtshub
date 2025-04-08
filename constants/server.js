@@ -17,3 +17,4 @@ export const deleteAllNewsUrl = `${apiUrl}/admin/all/news`;
 export const deleteAllForumsUrl = `${apiUrl}/admin/all/forums`;
 export const createCategoryUrl = `${apiUrl}/admin/categories`;
 export const upvoteForumsUrl = `${apiUrl}/forums/upvote`;
+export const deleteForumUrl = `${apiUrl}/admin/forums`;

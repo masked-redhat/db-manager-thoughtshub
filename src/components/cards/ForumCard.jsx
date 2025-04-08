@@ -11,12 +11,19 @@ import { BiUpvote } from "react-icons/bi";
 import { BiSolidUpvote } from "react-icons/bi";
 import { requestAuth } from "../../../utils/request";
 import { useToken } from "../../providers/AdminTokenProvider";
-import { upvoteForumsUrl } from "../../../constants/server";
+import { deleteForumUrl, upvoteForumsUrl } from "../../../constants/server";
 import { Loader2 } from "lucide-react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
 
-const ForumCard = ({ data }) => {
+const ForumCard = ({ data, fetchForums }) => {
   const { token } = useToken();
   const [loading, setLoading] = useState(false);
   const [isVoted, setIsVoted] = useState(data.isVoted);
@@ -40,12 +47,7 @@ const ForumCard = ({ data }) => {
     <div className="lg:w-lg w-full border border-gray-300 rounded-xl shadow-md flex flex-col p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white gap-4">
       <div className="flex items-center justify-between">
         <WriterCard data={data.writer} />
-        <Button
-          variant="secondary"
-          className="flex items-center justify-center p-1 rounded-full cursor-pointer"
-        >
-          <HiOutlineDotsVertical />
-        </Button>
+        <ActionBtn forumId={data.id} token={token} fetchForums={fetchForums} />
       </div>
 
       {/* Image */}
@@ -107,6 +109,45 @@ const ForumCard = ({ data }) => {
         </div>
       </div>
     </div>
+  );
+};
+
+const ActionBtn = ({ forumId, token, fetchForums }) => {
+  const [deleting, setDeleting] = useState(false);
+
+  const handleDeleteForum = async () => {
+    setDeleting(true);
+
+    const response = await requestAuth(
+      deleteForumUrl + `?forumId=${forumId}`,
+      "DELETE",
+      token
+    );
+
+    if (response.ok) {
+      toast("Forum Deleted");
+      fetchForums();
+    } else toast("Forum couldn't be deleted");
+
+    setDeleting(false);
+  };
+
+  return (
+    <DropdownMenu className="rounded-full">
+      <DropdownMenuTrigger className="flex items-center justify-center p-1 rounded-full cursor-pointer">
+        <HiOutlineDotsVertical />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem disabled={true}>Edit</DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          disabled={deleting}
+          onClick={handleDeleteForum}
+        >
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

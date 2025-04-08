@@ -55,7 +55,7 @@ const PanelForums = () => {
   return (
     <section>
       <header>
-        <div className="flex flex-col gap-3 mb-2 w-fit ml-2">
+        <div className="flex flex-row gap-3 mb-2 w-fit ml-2">
           <h1 className="text-3xl font-medium">Forums</h1>
           <div className="flex items-center gap-3">
             <Button
@@ -82,7 +82,9 @@ const PanelForums = () => {
         ) : forums.length === 0 ? (
           <p>No forums found</p>
         ) : (
-          forums.map((n) => <ForumCard data={n} key={n.id} />)
+          forums.map((n) => (
+            <ForumCard data={n} key={n.id} fetchForums={fetchForums} />
+          ))
         )}
       </main>
 

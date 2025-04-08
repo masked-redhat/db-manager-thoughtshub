@@ -17,7 +17,9 @@ const WriterCard = ({ data }) => {
       )}
 
       <div className="flex flex-col items-center justify-center w-fit">
-        <p className="font-bold text-lg -mb-1">{data.fullName}</p>
+        <p className="font-bold text-lg -mb-1 align-middle -mt-1.5">
+          {data.fullName}
+        </p>
         <p className="text-xs font-inter flex items-center gap-1">
           <span className="font-bold">@</span> {data.username}
         </p>
