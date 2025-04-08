@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   Tooltip,
@@ -6,11 +6,32 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
+import { newsUploadUrl } from "../../../constants/server";
+import { useToken } from "../../providers/AdminTokenProvider";
+import { requestAuth } from "../../../utils/request";
 
-const NewsCard = ({ data }) => {
+const NewsCard = ({ data, fetchNews }) => {
+  const { token } = useToken();
   return (
-    <div className="lg:w-lg w-full border border-gray-300 rounded-xl shadow-md flex flex-col p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white gap-4">
+    <div className="lg:w-lg w-full border border-gray-300 rounded-xl shadow-md flex flex-col p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white gap-4 relative">
+      <div className="absolute top-6 right-6 w-fit rounded-full p-0">
+        <ActionBtn
+          newsId={data.id}
+          fetchNews={fetchNews}
+          token={token}
+          className="bg-gray-300 p-2"
+        />
+      </div>
+
       {/* Image */}
       {data.imageUrl ? (
         <img
@@ -29,7 +50,7 @@ const NewsCard = ({ data }) => {
         <div className="text-xs text-gray-500 break-all">
           {data.id.toUpperCase()}
         </div>
-        <div className="text-2xl font-semibold">{data.title} </div>
+        <div className="text-2xl font-semibold">{data.title}</div>
 
         <div className="flex text-xs gap-3">
           <div className="text-gray-500">
@@ -54,6 +75,50 @@ const NewsCard = ({ data }) => {
         <ScrollArea className="text-sm h-[150px]">{data.body}</ScrollArea>
       </div>
     </div>
+  );
+};
+
+const ActionBtn = ({ newsId, token, fetchNews, className }) => {
+  const [deleting, setDeleting] = useState(false);
+
+  const handleDeleteNews = async () => {
+    setDeleting(true);
+
+    const response = await requestAuth(
+      newsUploadUrl + `?newsId=${newsId}`,
+      "DELETE",
+      token
+    );
+
+    if (response.ok) {
+      toast("News Deleted");
+      fetchNews();
+    } else toast("News couldn't be deleted");
+
+    setDeleting(false);
+  };
+
+  return (
+    <DropdownMenu className="rounded-full">
+      <DropdownMenuTrigger
+        className={
+          "flex items-center justify-center p-1 rounded-full cursor-pointer " +
+          className
+        }
+      >
+        <HiOutlineDotsVertical />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem disabled={true}>Edit</DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          disabled={deleting}
+          onClick={handleDeleteNews}
+        >
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

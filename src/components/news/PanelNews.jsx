@@ -99,7 +99,7 @@ const PanelNews = () => {
         ) : news.length === 0 ? (
           <p>No news found</p>
         ) : (
-          news.map((n) => <NewsCard data={n} key={n.id} />)
+          news.map((n) => <NewsCard data={n} key={n.id} fetchNews={fetchNews} />)
         )}
       </main>
 

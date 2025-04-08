@@ -9,16 +9,6 @@ dotenv.config();
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  server: {
-    proxy: {
-      // Proxy requests starting with /uploads to your backend
-      "/uploads": {
-        target: "http://localhost:4000",
-        changeOrigin: true,
-        secure: false,
-      },
-    },
-  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
