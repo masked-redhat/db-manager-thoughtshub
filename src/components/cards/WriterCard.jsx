@@ -16,7 +16,7 @@ const WriterCard = ({ data }) => {
         </div>
       )}
 
-      <div className="flex flex-col items-center justify-center w-fit">
+      <div className="flex flex-col w-fit">
         <p className="font-bold text-lg -mb-1 align-middle -mt-1.5">
           {data.fullName}
         </p>
