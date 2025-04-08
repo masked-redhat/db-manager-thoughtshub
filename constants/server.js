@@ -21,3 +21,4 @@ export const deleteForumUrl = `${apiUrl}/admin/forums`;
 export const getUsersCountUrl = `${apiUrl}/admin/users/pages`;
 export const getUsersUrl = `${apiUrl}/admin/users`;
 export const checkUsernameUrl = `${apiUrl}/check-username`;
+export const getUserUrl = `${apiUrl}/admin/user`;

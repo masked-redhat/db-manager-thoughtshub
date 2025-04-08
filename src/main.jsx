@@ -16,6 +16,7 @@ import PanelCreateForum from "./components/forums/PanelCreateForum.jsx";
 import PanelUsers from "./components/users/PanelUsers.jsx";
 import PanelCreateUser from "./components/users/PanelCreateUser.jsx";
 import { productionPath } from "../constants/path.js";
+import PanelEditUser from "./components/users/PanelEditUser.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: "create-forums", Component: PanelCreateForum },
       { path: "users", Component: PanelUsers },
       { path: "create-user", Component: PanelCreateUser },
+      { path: "edit-user/:id", Component: PanelEditUser },
     ],
   },
 ]);

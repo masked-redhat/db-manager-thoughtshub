@@ -163,7 +163,7 @@ const ForumsImageUploader = ({ file, setFile, setImageUrl }) => {
       {file ? (
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger disabled={true}>
               <p
                 className="max-w-96 overflow-hidden truncate whitespace-nowrap
               "

@@ -19,6 +19,8 @@ import { useToken } from "../../providers/AdminTokenProvider";
 import { Badge } from "@/components/ui/badge";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { requestAuth } from "../../../utils/request";
+import { NavLink, useNavigate } from "react-router";
+import { productionPath } from "../../../constants/path";
 
 const UserCard = ({ data, fetchUsers }) => {
   const { token } = useToken();
@@ -121,6 +123,7 @@ const UserCard = ({ data, fetchUsers }) => {
 };
 
 const ActionBtn = ({ userId, token, fetchUsers }) => {
+  const navigate = useNavigate();
   const [deleting, setDeleting] = useState(false);
 
   const handleDeleteUser = async () => {
@@ -146,7 +149,13 @@ const ActionBtn = ({ userId, token, fetchUsers }) => {
         <HiOutlineDotsVertical />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem disabled={true}>Edit</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            navigate(`${productionPath}/edit-user/${userId}`);
+          }}
+        >
+          Edit
+        </DropdownMenuItem>
         <DropdownMenuItem
           className="cursor-pointer"
           disabled={deleting}

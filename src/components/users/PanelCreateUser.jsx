@@ -157,7 +157,7 @@ const PanelCreateUser = () => {
             onChange={(e) => setAbout(e.target.value)}
             required
           />
-          <Select defaultValue={gender} onValueChange={setGender}>
+          <Select value={gender} onValueChange={setGender}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select a gender" />
             </SelectTrigger>

@@ -4,7 +4,6 @@ import { requestAuth } from "../../../utils/request";
 import { getUsersCountUrl, getUsersUrl } from "../../../constants/server";
 import { useToken } from "../../providers/AdminTokenProvider";
 import { Loader2 } from "lucide-react";
-import ForumCard from "../cards/ForumCard";
 import UserCard from "../cards/UserCard";
 
 const PanelUsers = () => {

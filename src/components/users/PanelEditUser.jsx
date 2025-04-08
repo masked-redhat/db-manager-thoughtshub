@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { requestAuth, uploadAuth } from "../../../utils/request";
-import { newsUploadUrl, uploadUrl } from "../../../constants/server";
+import { getUsersUrl, getUserUrl, uploadUrl } from "../../../constants/server";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,44 +11,61 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToken } from "../../providers/AdminTokenProvider";
 import { toast, Toaster } from "sonner";
-import SelectCategory from "../select/SelectCategory";
+import { useParams } from "react-router";
 
-const PanelCreateNews = () => {
+const PanelEditUser = () => {
+  const { id } = useParams();
   const { token } = useToken();
 
   const [file, setFile] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [category, setCategory] = useState("");
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [newsUrl, setNewsUrl] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [about, setAbout] = useState("");
+  const [gender, setGender] = useState(undefined);
+  const [user, setUser] = useState({});
+  const [profileId, setProfileId] = useState(null);
 
-  const [newsUploading, setNewsUploading] = useState(false);
+  const [updating, setUpdating] = useState(false);
 
   const resetForm = () => {
     setFile("");
-    setCategory("");
     setImageUrl("");
-    setTitle("");
-    setBody("");
-    setNewsUrl("");
+    setFullName("");
+    setAbout("");
+    setGender(undefined);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setNewsUploading(true);
+    setUpdating(true);
 
-    const data = { title, body, imageUrl, category, newsUrl };
+    const data = {
+      userId: id,
+      profileId,
+      fullName,
+      about,
+      gender,
+      profileImageUrl: imageUrl,
+    };
 
-    const response = await requestAuth(newsUploadUrl, "POST", token, data);
+    const response = await requestAuth(getUserUrl, "PUT", token, data);
 
     const result = await response.json();
     if (response.ok) {
-      toast("News uploaded", {
-        description: `News created with title ${title}`,
+      toast("User updated", {
+        description: `User updated with given information`,
         action: {
           label: "Log",
           onClick: () => console.log(result),
@@ -57,46 +74,76 @@ const PanelCreateNews = () => {
       resetForm();
     }
 
-    setNewsUploading(false);
+    setUpdating(false);
   };
+
+  const getUserInfo = async () => {
+    const response = await requestAuth(
+      getUserUrl + `?userId=${id}`,
+      "GET",
+      token
+    );
+
+    if (response.ok) {
+      const result = await response.json();
+      setUser(result.user);
+      setFullName(result.user?.fullName ?? "");
+      setAbout(result.user?.about ?? "");
+      setGender(result.user?.gender ?? undefined);
+      setImageUrl(result.user?.profileImageUrl ?? "");
+    }
+  };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   return (
     <section className="w-full flex flex-col gap-4">
       <header>
-        <h1 className="text-3xl font-extrabold mb-1">Create News</h1>
+        <h1 className="text-3xl font-extrabold mb-1">
+          Edit User{" "}
+          <span className="font-manrope">{`[ @${user.username} ]`}</span>
+        </h1>
         <hr />
       </header>
       <form onSubmit={handleSubmit} className="w-full px-2 flex flex-col gap-3">
-        <NewsImageUploader
+        <UserImageUploader
           file={file}
           setFile={setFile}
           setImageUrl={setImageUrl}
+          imageUrl={imageUrl}
         />
         <div className="flex flex-col gap-3 w-full max-w-[540px]">
           <Input
             type="text"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Full Name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
             required
           />
           <Textarea
-            placeholder="Body"
+            placeholder="About"
             className="max-h-56"
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
+            value={about}
+            onChange={(e) => setAbout(e.target.value)}
             required
           />
-          <SelectCategory category={category} setCategory={setCategory} />
-          <Input
-            type="text"
-            placeholder="News Url"
-            value={newsUrl}
-            onChange={(e) => setNewsUrl(e.target.value)}
-            required
-          />
-          <Button className="w-fit" disabled={newsUploading}>
-            {newsUploading ? (
+          <Select value={gender} onValueChange={setGender}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select a gender" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Gender</SelectLabel>
+                <SelectItem value="Male">Male</SelectItem>
+                <SelectItem value="Female">Female</SelectItem>
+                <SelectItem value="Other">Other</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Button className="w-fit" disabled={updating}>
+            {updating ? (
               <>
                 <Loader2 className="animate-spin" />
                 <span>Please wait</span>
@@ -112,7 +159,7 @@ const PanelCreateNews = () => {
   );
 };
 
-const NewsImageUploader = ({ file, setFile, setImageUrl }) => {
+const UserImageUploader = ({ file, setFile, setImageUrl, imageUrl }) => {
   const [uploadingFile, setUploadingFile] = useState(false);
   const [uploadedFile, setUploadedFile] = useState("");
 
@@ -146,6 +193,10 @@ const NewsImageUploader = ({ file, setFile, setImageUrl }) => {
 
     return () => {};
   }, [file]);
+
+  useEffect(() => {
+    setUploadedFile(imageUrl ?? "");
+  }, [imageUrl]);
 
   return (
     <div className="flex flex-col gap-1 items-center w-fit">
@@ -202,4 +253,4 @@ const NewsImageUploader = ({ file, setFile, setImageUrl }) => {
   );
 };
 
-export default PanelCreateNews;
+export default PanelEditUser;
