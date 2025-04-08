@@ -143,6 +143,7 @@ const PanelCreateUser = () => {
             onChange={(e) => setFullName(e.target.value)}
             required
           />
+          <p>{imageUrl}</p>
           <Input
             type="password"
             placeholder="Password"
@@ -212,6 +213,7 @@ const UserImageUploader = ({ file, setFile, setImageUrl }) => {
     setUploadedFile("");
     setFile("");
     setUploadingFile(false);
+    setImageUrl("");
   };
 
   useEffect(() => {

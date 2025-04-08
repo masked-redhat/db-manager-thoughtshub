@@ -8,7 +8,7 @@ const WriterCard = ({ data }) => {
         <img
           src={data.profileImageUrl}
           alt="Error"
-          className="w-11 h-11 rounded-full"
+          className="w-11 h-11 rounded-full object-cover"
         />
       ) : (
         <div className="flex items-center justify-center bg-black text-white w-11 h-11 rounded-full capitalize select-none">

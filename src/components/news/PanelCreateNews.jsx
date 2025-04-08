@@ -137,6 +137,7 @@ const NewsImageUploader = ({ file, setFile, setImageUrl }) => {
     setUploadedFile("");
     setFile("");
     setUploadingFile(false);
+    setImageUrl("");
   };
 
   useEffect(() => {

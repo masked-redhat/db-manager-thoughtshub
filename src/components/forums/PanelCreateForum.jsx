@@ -124,6 +124,7 @@ const ForumsImageUploader = ({ file, setFile, setImageUrl }) => {
     setUploadedFile("");
     setFile("");
     setUploadingFile(false);
+    setImageUrl("");
   };
 
   useEffect(() => {
