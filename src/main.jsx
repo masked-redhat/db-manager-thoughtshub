@@ -11,6 +11,8 @@ import PanelCreateNews from "./components/news/PanelCreateNews.jsx";
 import PanelNews from "./components/news/PanelNews.jsx";
 import PanelGetCategories from "./components/category/PanelGetCategories.jsx";
 import PanelCreateCategory from "./components/category/PanelCreateCategory.jsx";
+import PanelForums from "./components/forums/PanelForums.jsx";
+import PanelCreateForum from "./components/forums/PanelCreateForum.jsx";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,8 @@ const router = createBrowserRouter([
       { path: "news", Component: PanelNews },
       { path: "categories", Component: PanelGetCategories },
       { path: "create-new-category", Component: PanelCreateCategory },
+      { path: "forums", Component: PanelForums },
+      { path: "create-forums", Component: PanelCreateForum },
     ],
   },
 ]);

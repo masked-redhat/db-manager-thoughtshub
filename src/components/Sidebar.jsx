@@ -28,9 +28,20 @@ const Sidebar = () => {
 
       <hr />
 
+      <SideBarGroup title="Users">
+        <li>Users</li>
+        <li>Create New</li>
+      </SideBarGroup>
+
+      <hr />
+
       <SideBarGroup title="Forums">
-        <li>Forums</li>
-        <li>Create Forum</li>
+        <NavLink to="forums" end>
+          Forums
+        </NavLink>
+        <NavLink to="create-forums" end>
+          Create New Forum
+        </NavLink>
         <DeleteAllForums />
       </SideBarGroup>
 
