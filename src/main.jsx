@@ -15,10 +15,11 @@ import PanelForums from "./components/forums/PanelForums.jsx";
 import PanelCreateForum from "./components/forums/PanelCreateForum.jsx";
 import PanelUsers from "./components/users/PanelUsers.jsx";
 import PanelCreateUser from "./components/users/PanelCreateUser.jsx";
+import { productionPath } from "../constants/path.js";
 
 const router = createBrowserRouter([
   {
-    path: "/admin-panel",
+    path: productionPath,
     Component: App,
     children: [
       { index: true, Component: PanelHome },
