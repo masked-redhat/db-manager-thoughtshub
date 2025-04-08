@@ -62,11 +62,11 @@ const PanelCreateForum = () => {
         <hr />
       </header>
       <form onSubmit={handleSubmit} className="w-full px-2 flex flex-col gap-3">
-        <ForumsImageUploader
+        {/* <ForumsImageUploader
           file={file}
           setFile={setFile}
           setImageUrl={setImageUrl}
-        />
+        /> */}
         <div className="flex flex-col gap-3 w-full max-w-[540px]">
           <Input
             type="text"

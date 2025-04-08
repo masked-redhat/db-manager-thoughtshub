@@ -50,7 +50,7 @@ const ForumCard = ({ data, fetchForums }) => {
         <ActionBtn forumId={data.id} token={token} fetchForums={fetchForums} />
       </div>
 
-      {/* Image */}
+      {/* Image
       {data.imageUrl ? (
         <img
           src={data.imageUrl}
@@ -61,7 +61,7 @@ const ForumCard = ({ data, fetchForums }) => {
         <div className="w-full lg:w-64 bg-gray-200 flex items-center justify-center text-gray-500 text-sm rounded-md lg:mr-4">
           No Image
         </div>
-      )}
+      )} */}
 
       {/* Content */}
       <div className="flex-1 flex flex-col gap-2 overflow-auto">
