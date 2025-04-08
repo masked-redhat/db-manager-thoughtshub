@@ -82,6 +82,7 @@ const PanelSection = ({
         {data.map((d) => {
           return <Category category={d} key={d.id} remove={handleRemove} />;
         })}
+        {data.length === 0 ? "No categories available to show" : null}
       </div>
       <Toaster />
     </section>
