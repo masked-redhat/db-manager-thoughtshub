@@ -59,14 +59,12 @@ const PanelHomeSection = ({ title, data, load }) => {
 
       <div className="flex flex-row flex-wrap gap-4 mt-2">
         {data.map((news) => (
-          <NewsCard data={news} key={news.id} />
+          <NewsCard data={news} key={news.id} fetchNews={handleGetLatestNews} />
         ))}
         {data.length !== 0 ? null : <p>No News Found</p>}
       </div>
     </section>
   );
 };
-
-
 
 export default PanelHome;
