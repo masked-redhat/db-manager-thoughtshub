@@ -105,14 +105,21 @@ const UserCard = ({ data, fetchUsers }) => {
 
       <div className="flex text-xs gap-3">
         <div className="text-gray-500">
-          {new Date(Number(data.createDate)).toLocaleString()}
+          {new Date(
+            Number(data.Profile?.createDate ?? data.createDate)
+          ).toLocaleString()}
         </div>
-        {data.createDate !== data.updateDate && (
+        {console.log(data.Profile?.createDate, data.Profile?.updateDate)}
+        {data.Profile?.createDate !== data.Profile?.updateDate && (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>( Edited )</TooltipTrigger>
               <TooltipContent>
-                <div>{new Date(Number(data.updateDate)).toLocaleString()}</div>
+                <div>
+                  {new Date(
+                    Number(data.Profile.updateDate ?? data.updateDate)
+                  ).toLocaleString()}
+                </div>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

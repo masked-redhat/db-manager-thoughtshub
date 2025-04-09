@@ -22,11 +22,13 @@ import {
 } from "@/components/ui/select";
 import { useToken } from "../../providers/AdminTokenProvider";
 import { toast, Toaster } from "sonner";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { productionPath } from "../../../constants/path";
 
 const PanelEditUser = () => {
   const { id } = useParams();
   const { token } = useToken();
+  const navigate = useNavigate();
 
   const [file, setFile] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -72,6 +74,7 @@ const PanelEditUser = () => {
         },
       });
       resetForm();
+      navigate(`${productionPath}/users`);
     }
 
     setUpdating(false);
