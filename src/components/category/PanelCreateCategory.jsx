@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToken } from "../../providers/AdminTokenProvider";
 import { toast, Toaster } from "sonner";
 import { requestAuth } from "../../../utils/request";
 import { createCategoryUrl } from "../../../constants/server";
+import PleaseWait from "../PleaseWait";
+import SubmitRight from "../SubmitRight";
 
 const PanelCreateCategory = () => {
   const { token } = useToken();
@@ -63,14 +63,7 @@ const PanelCreateCategory = () => {
           />
 
           <Button className="w-fit" disabled={creating}>
-            {creating ? (
-              <>
-                <Loader2 className="animate-spin" />
-                <span>Please wait</span>
-              </>
-            ) : (
-              <p>Submit &rarr;</p>
-            )}
+            {creating ? <PleaseWait /> : <SubmitRight />}
           </Button>
         </div>
       </form>

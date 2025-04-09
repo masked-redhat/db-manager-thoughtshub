@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { requestAuth } from "../../../utils/request";
 import { getNewsByOffsetUrl, getNewsCountUrl } from "../../../constants/server";
 import { useToken } from "../../providers/AdminTokenProvider";
-import { Loader2 } from "lucide-react";
 import NewsCard from "../cards/NewsCard";
 import SelectCategory from "../select/SelectCategory";
+import PleaseWait from "../PleaseWait";
 
 const PanelNews = () => {
   const { token } = useToken();
@@ -93,13 +93,13 @@ const PanelNews = () => {
 
       <main className="my-4 flex flex-wrap gap-3">
         {newsLoading ? (
-          <span className="flex items-center gap-2">
-            <Loader2 className="animate-spin" /> Please wait...
-          </span>
+          <PleaseWait />
         ) : news.length === 0 ? (
           <p>No news found</p>
         ) : (
-          news.map((n) => <NewsCard data={n} key={n.id} fetchNews={fetchNews} />)
+          news.map((n) => (
+            <NewsCard data={n} key={n.id} fetchNews={fetchNews} />
+          ))
         )}
       </main>
 
@@ -113,13 +113,7 @@ const PanelNews = () => {
             setCurrentPage(currentPage - 1);
           }}
         >
-          {totalLoading ? (
-            <span className="flex items-center gap-2">
-              <Loader2 className="animate-spin" /> Please wait...
-            </span>
-          ) : (
-            <span>&larr; Previous</span>
-          )}
+          {totalLoading ? <PleaseWait /> : <span>&larr; Previous</span>}
         </Button>
         <Button
           variant="secondary"
@@ -130,13 +124,7 @@ const PanelNews = () => {
             setCurrentPage(currentPage + 1);
           }}
         >
-          {totalLoading ? (
-            <span className="flex items-center gap-2">
-              <Loader2 className="animate-spin" /> Please wait...
-            </span>
-          ) : (
-            <span>Next &rarr;</span>
-          )}
+          {totalLoading ? <PleaseWait /> : <span>Next &rarr;</span>}
         </Button>
       </footer>
     </section>

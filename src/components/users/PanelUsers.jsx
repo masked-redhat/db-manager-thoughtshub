@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { requestAuth } from "../../../utils/request";
 import { getUsersCountUrl, getUsersUrl } from "../../../constants/server";
 import { useToken } from "../../providers/AdminTokenProvider";
-import { Loader2 } from "lucide-react";
 import UserCard from "../cards/UserCard";
+import PleaseWait from "../PleaseWait";
 
 const PanelUsers = () => {
   const { token } = useToken();
@@ -73,9 +73,7 @@ const PanelUsers = () => {
 
       <main className="my-4 flex flex-wrap gap-3">
         {usersLoading ? (
-          <span className="flex items-center gap-2">
-            <Loader2 className="animate-spin" /> Please wait...
-          </span>
+          <PleaseWait />
         ) : users.length === 0 ? (
           <p>No users found</p>
         ) : (
@@ -95,13 +93,7 @@ const PanelUsers = () => {
             setCurrentPage(currentPage - 1);
           }}
         >
-          {totalLoading ? (
-            <span className="flex items-center gap-2">
-              <Loader2 className="animate-spin" /> Please wait...
-            </span>
-          ) : (
-            <span>&larr; Previous</span>
-          )}
+          {totalLoading ? <PleaseWait /> : <span>&larr; Previous</span>}
         </Button>
         <Button
           variant="secondary"
@@ -112,13 +104,7 @@ const PanelUsers = () => {
             setCurrentPage(currentPage + 1);
           }}
         >
-          {totalLoading ? (
-            <span className="flex items-center gap-2">
-              <Loader2 className="animate-spin" /> Please wait...
-            </span>
-          ) : (
-            <span>Next &rarr;</span>
-          )}
+          {totalLoading ? <PleaseWait /> : <span>Next &rarr;</span>}
         </Button>
       </footer>
     </section>

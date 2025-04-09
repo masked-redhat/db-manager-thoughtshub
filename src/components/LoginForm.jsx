@@ -9,11 +9,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
 import { loginAdminUrl } from "../../constants/server";
 import { post } from "../../utils/request";
 import { useToken } from "../providers/AdminTokenProvider";
 import Cookies from "js-cookie";
+import PleaseWait from "./PleaseWait";
+import SubmitRight from "./SubmitRight";
 
 const LoginForm = () => {
   const [disabled, setDisabled] = useState(false);
@@ -70,16 +71,13 @@ const LoginForm = () => {
               autoComplete="new-password"
               required
             />
-            {disabled ? (
-              <Button disabled>
-                <Loader2 className="animate-spin" />
-                Please wait
-              </Button>
-            ) : (
-              <Button className="cursor-pointer" type="submit">
-                Submit &rarr;
-              </Button>
-            )}
+            <Button
+              className="cursor-pointer"
+              type="submit"
+              disabled={disabled}
+            >
+              {disabled ? <PleaseWait /> : <SubmitRight />}
+            </Button>
           </div>
         </CardContent>
         <CardFooter>

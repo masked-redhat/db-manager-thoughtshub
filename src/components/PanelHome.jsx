@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { requestAuth } from "../../utils/request";
 import { getNewsUrl } from "../../constants/server";
 import { useToken } from "../providers/AdminTokenProvider";
-import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import NewsCard from "./cards/NewsCard";
+import PleaseWait from "./PleaseWait";
 
 const PanelHome = () => {
   const [latestNews, setLatestNews] = useState([]);
@@ -30,10 +30,7 @@ const PanelHome = () => {
   return (
     <>
       {loading ? (
-        <span className="flex gap-2">
-          <Loader2 className="animate-spin" />
-          Please wait
-        </span>
+        <PleaseWait />
       ) : (
         <main>
           <PanelHomeSection

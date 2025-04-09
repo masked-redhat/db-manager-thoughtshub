@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { requestAuth, uploadAuth } from "../../../utils/request";
-import {
-  checkUsernameUrl,
-  getUsersUrl,
-  uploadUrl,
-} from "../../../constants/server";
-import { Loader2 } from "lucide-react";
+import { requestAuth } from "../../../utils/request";
+import { checkUsernameUrl, getUsersUrl } from "../../../constants/server";
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import {
   Select,
   SelectContent,
@@ -28,11 +17,13 @@ import { useToken } from "../../providers/AdminTokenProvider";
 import { toast, Toaster } from "sonner";
 import { RxCross2 } from "react-icons/rx";
 import { RxCheck } from "react-icons/rx";
+import ImageUploader from "../ImageUploader";
+import PleaseWait from "../PleaseWait";
+import SubmitRight from "../SubmitRight";
 
 const PanelCreateUser = () => {
   const { token } = useToken();
 
-  const [file, setFile] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -44,7 +35,6 @@ const PanelCreateUser = () => {
   const [usernameAvailable, setUsernameAvailable] = useState(false);
 
   const resetForm = () => {
-    setFile("");
     setImageUrl("");
     setUsername("");
     setPassword("");
@@ -114,11 +104,7 @@ const PanelCreateUser = () => {
         <hr />
       </header>
       <form onSubmit={handleSubmit} className="w-full px-2 flex flex-col gap-3">
-        <UserImageUploader
-          file={file}
-          setFile={setFile}
-          setImageUrl={setImageUrl}
-        />
+        <ImageUploader setImageUrl={setImageUrl} imageUrl={imageUrl} />
         <div className="flex flex-col gap-3 w-full max-w-[540px]">
           <div className="w-full relative flex items-center">
             <Input
@@ -171,109 +157,12 @@ const PanelCreateUser = () => {
             </SelectContent>
           </Select>
           <Button className="w-fit" disabled={creating}>
-            {creating ? (
-              <>
-                <Loader2 className="animate-spin" />
-                <span>Please wait</span>
-              </>
-            ) : (
-              <p>Submit &rarr;</p>
-            )}
+            {creating ? <PleaseWait /> : <SubmitRight />}
           </Button>
         </div>
       </form>
       <Toaster />
     </section>
-  );
-};
-
-const UserImageUploader = ({ file, setFile, setImageUrl }) => {
-  const [uploadingFile, setUploadingFile] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState("");
-
-  const uploadFileAndShow = async () => {
-    setUploadingFile(true);
-
-    const formData = new FormData();
-    formData.append("file", file);
-    const response = await uploadAuth(uploadUrl, formData);
-
-    const result = await response.json();
-
-    if (response.ok) {
-      setUploadedFile(result.fileUrl);
-      setImageUrl(result.fileUrl);
-    }
-
-    setUploadingFile(false);
-  };
-
-  const removeImage = () => {
-    setUploadedFile("");
-    setFile("");
-    setUploadingFile(false);
-    setImageUrl("");
-  };
-
-  useEffect(() => {
-    if (file) uploadFileAndShow();
-    else setUploadedFile("");
-
-    return () => {};
-  }, [file]);
-
-  return (
-    <div className="flex flex-col gap-1 items-center w-fit">
-      <div className="w-96 h-56 bg-black rounded-md relative flex  items-center justify-center text-white group">
-        {uploadedFile.length !== 0 ? (
-          <>
-            <img
-              src={uploadedFile}
-              alt=""
-              className="w-full h-full object-contain"
-            />
-            <Button
-              variant="outline"
-              className="absolute right-0 bottom-0 mx-3 my-3 bg-black/75 cursor-pointer text-white shadow-sm opacity-0 border-0 group-hover:opacity-100"
-              onClick={removeImage}
-            >
-              Remove
-            </Button>
-          </>
-        ) : uploadingFile ? (
-          <p className="flex gap-2">
-            <Loader2 className="animate-spin" /> <span>Uploading...</span>
-          </p>
-        ) : (
-          <p>No Image selected</p>
-        )}
-      </div>
-      {file ? (
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <p
-                className="max-w-96 overflow-hidden truncate whitespace-nowrap
-              "
-              >
-                <span className="font-bold">Image:</span> {file.name}
-              </p>
-            </TooltipTrigger>
-            <TooltipContent>
-              <div className="max-w-96">{file.name}</div>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ) : (
-        <Input
-          type="file"
-          value={file}
-          onChange={(e) => setFile(e.target.files?.[0])}
-          accept="image/*"
-          className="w-96"
-        />
-      )}
-    </div>
   );
 };
 

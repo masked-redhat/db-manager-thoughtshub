@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { requestAuth } from "../../../utils/request";
 import { createCategoryUrl, getCategoriesUrl } from "../../../constants/server";
-import { Loader2 } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -12,6 +11,7 @@ import {
 import { MdDelete } from "react-icons/md";
 import { useToken } from "../../providers/AdminTokenProvider";
 import { toast, Toaster } from "sonner";
+import PleaseWait from "../PleaseWait";
 
 const PanelGetCategories = () => {
   const [loading, setLoading] = useState(false);
@@ -38,10 +38,7 @@ const PanelGetCategories = () => {
   return (
     <>
       {loading ? (
-        <span className="flex gap-2">
-          <Loader2 className="animate-spin" />
-          Please wait
-        </span>
+        <PleaseWait />
       ) : (
         <main>
           <PanelSection
@@ -124,7 +121,7 @@ const Category = ({ category, remove }) => {
         onClick={handleDelete}
         disabled={deleting}
       >
-        {deleting ? <Loader2 className="animate-spin" /> : <MdDelete />}
+        {deleting ? <PleaseWait text={false} /> : <MdDelete />}
       </Button>
     </div>
   );

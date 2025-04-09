@@ -1,50 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { requestAuth, uploadAuth } from "../../../utils/request";
-import {
-  forumsUploadUrl,
-  getForumsUrl,
-  uploadUrl,
-} from "../../../constants/server";
-import { Loader2 } from "lucide-react";
+import { requestAuth } from "../../../utils/request";
+import { forumsUploadUrl, getForumsUrl } from "../../../constants/server";
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { useToken } from "../../providers/AdminTokenProvider";
 import { toast, Toaster } from "sonner";
 import { useNavigate, useParams } from "react-router";
 import { productionPath } from "../../../constants/path";
+import PleaseWait from "../PleaseWait";
+import SubmitRight from "../SubmitRight";
 
 const PanelEditForum = () => {
   const { forumId } = useParams();
   const { token } = useToken();
   const navigate = useNavigate();
 
-  const [file, setFile] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
   const [forumsUploading, setForumsUploading] = useState(false);
-
-  const resetForm = () => {
-    setFile("");
-    setImageUrl("");
-    setTitle("");
-    setBody("");
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setForumsUploading(true);
 
-    const data = { title, body, imageUrl, forumId };
+    const data = { title, body, forumId };
 
     const response = await requestAuth(forumsUploadUrl, "PUT", token, data);
 
@@ -104,109 +86,12 @@ const PanelEditForum = () => {
             required
           />
           <Button className="w-fit" disabled={forumsUploading}>
-            {forumsUploading ? (
-              <>
-                <Loader2 className="animate-spin" />
-                <span>Please wait</span>
-              </>
-            ) : (
-              <p>Submit &rarr;</p>
-            )}
+            {forumsUploading ? <PleaseWait /> : <SubmitRight />}
           </Button>
         </div>
       </form>
       <Toaster />
     </section>
-  );
-};
-
-const ForumsImageUploader = ({ file, setFile, setImageUrl }) => {
-  const [uploadingFile, setUploadingFile] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState("");
-
-  const uploadFileAndShow = async () => {
-    setUploadingFile(true);
-
-    const formData = new FormData();
-    formData.append("file", file);
-    const response = await uploadAuth(uploadUrl, formData);
-
-    const result = await response.json();
-
-    if (response.ok) {
-      setUploadedFile(result.fileUrl);
-      setImageUrl(result.fileUrl);
-    }
-
-    setUploadingFile(false);
-  };
-
-  const removeImage = () => {
-    setUploadedFile("");
-    setFile("");
-    setUploadingFile(false);
-    setImageUrl("");
-  };
-
-  useEffect(() => {
-    if (file) uploadFileAndShow();
-    else setUploadedFile("");
-
-    return () => {};
-  }, [file]);
-
-  return (
-    <div className="flex flex-col gap-1 items-center w-fit">
-      <div className="w-96 h-56 bg-black rounded-md relative flex  items-center justify-center text-white group">
-        {uploadedFile.length !== 0 ? (
-          <>
-            <img
-              src={uploadedFile}
-              alt=""
-              className="w-full h-full object-contain"
-            />
-            <Button
-              variant="outline"
-              className="absolute right-0 bottom-0 mx-3 my-3 bg-black/75 cursor-pointer text-white shadow-sm opacity-0 border-0 group-hover:opacity-100"
-              onClick={removeImage}
-            >
-              Remove
-            </Button>
-          </>
-        ) : uploadingFile ? (
-          <p className="flex gap-2">
-            <Loader2 className="animate-spin" /> <span>Uploading...</span>
-          </p>
-        ) : (
-          <p>No Image selected</p>
-        )}
-      </div>
-      {file ? (
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger disabled={true}>
-              <p
-                className="max-w-96 overflow-hidden truncate whitespace-nowrap
-              "
-              >
-                <span className="font-bold">Image:</span> {file.name}
-              </p>
-            </TooltipTrigger>
-            <TooltipContent>
-              <div className="max-w-96">{file.name}</div>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ) : (
-        <Input
-          type="file"
-          value={file}
-          onChange={(e) => setFile(e.target.files?.[0])}
-          accept="image/*"
-          className="w-96"
-        />
-      )}
-    </div>
   );
 };
 

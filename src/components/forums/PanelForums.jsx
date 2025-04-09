@@ -6,8 +6,8 @@ import {
   getForumsCountUrl,
 } from "../../../constants/server";
 import { useToken } from "../../providers/AdminTokenProvider";
-import { Loader2 } from "lucide-react";
 import ForumCard from "../cards/ForumCard";
+import PleaseWait from "../PleaseWait";
 
 const PanelForums = () => {
   const { token } = useToken();
@@ -76,9 +76,7 @@ const PanelForums = () => {
 
       <main className="my-4 flex flex-wrap gap-3">
         {forumsLoading ? (
-          <span className="flex items-center gap-2">
-            <Loader2 className="animate-spin" /> Please wait...
-          </span>
+          <PleaseWait />
         ) : forums.length === 0 ? (
           <p>No forums found</p>
         ) : (
@@ -98,13 +96,7 @@ const PanelForums = () => {
             setCurrentPage(currentPage - 1);
           }}
         >
-          {totalLoading ? (
-            <span className="flex items-center gap-2">
-              <Loader2 className="animate-spin" /> Please wait...
-            </span>
-          ) : (
-            <span>&larr; Previous</span>
-          )}
+          {totalLoading ? <PleaseWait /> : <span>&larr; Previous</span>}
         </Button>
         <Button
           variant="secondary"
@@ -115,13 +107,7 @@ const PanelForums = () => {
             setCurrentPage(currentPage + 1);
           }}
         >
-          {totalLoading ? (
-            <span className="flex items-center gap-2">
-              <Loader2 className="animate-spin" /> Please wait...
-            </span>
-          ) : (
-            <span>Next &rarr;</span>
-          )}
+          {totalLoading ? <PleaseWait /> : <span>Next &rarr;</span>}
         </Button>
       </footer>
     </section>
