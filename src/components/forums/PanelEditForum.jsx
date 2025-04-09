@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { requestAuth, uploadAuth } from "../../../utils/request";
-import { getUsersUrl, getUserUrl, uploadUrl } from "../../../constants/server";
+import {
+  forumsUploadUrl,
+  getForumsUrl,
+  uploadUrl,
+} from "../../../constants/server";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,141 +15,96 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useToken } from "../../providers/AdminTokenProvider";
 import { toast, Toaster } from "sonner";
 import { useNavigate, useParams } from "react-router";
 import { productionPath } from "../../../constants/path";
 
-const PanelEditUser = () => {
-  const { id } = useParams();
+const PanelEditForum = () => {
+  const { forumId } = useParams();
   const { token } = useToken();
   const navigate = useNavigate();
 
   const [file, setFile] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [about, setAbout] = useState("");
-  const [gender, setGender] = useState(undefined);
-  const [user, setUser] = useState({});
-  const [profileId, setProfileId] = useState(null);
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
 
-  const [updating, setUpdating] = useState(false);
+  const [forumsUploading, setForumsUploading] = useState(false);
 
   const resetForm = () => {
     setFile("");
     setImageUrl("");
-    setFullName("");
-    setAbout("");
-    setGender(undefined);
+    setTitle("");
+    setBody("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setUpdating(true);
+    setForumsUploading(true);
 
-    const data = {
-      userId: id,
-      profileId,
-      fullName,
-      about,
-      gender,
-      profileImageUrl: imageUrl,
-    };
+    const data = { title, body, imageUrl, forumId };
 
-    const response = await requestAuth(getUserUrl, "PUT", token, data);
+    const response = await requestAuth(forumsUploadUrl, "PUT", token, data);
 
     const result = await response.json();
     if (response.ok) {
-      toast("User updated", {
-        description: `User updated with given information`,
+      toast("Forum updated", {
+        description: `Forum updated with title ${title}`,
         action: {
           label: "Log",
           onClick: () => console.log(result),
         },
       });
-      navigate(`${productionPath}/users`);
+      navigate(`${productionPath}/forums`);
     }
 
-    setUpdating(false);
+    setForumsUploading(false);
   };
 
-  const getUserInfo = async () => {
+  const getForumInfo = async () => {
     const response = await requestAuth(
-      getUserUrl + `?userId=${id}`,
+      getForumsUrl + `/${forumId}`,
       "GET",
       token
     );
 
     if (response.ok) {
       const result = await response.json();
-      setUser(result.user);
-      setFullName(result.user?.fullName ?? "");
-      setAbout(result.user?.about ?? "");
-      setGender(result.user?.gender ?? undefined);
-      setImageUrl(result.user?.profileImageUrl ?? "");
+      setTitle(result.forum.title);
+      setBody(result.forum.body);
     }
   };
 
   useEffect(() => {
-    getUserInfo();
+    getForumInfo();
   }, []);
 
   return (
     <section className="w-full flex flex-col gap-4">
       <header>
-        <h1 className="text-3xl font-extrabold mb-1">
-          Edit User{" "}
-          <span className="font-manrope">{`[ @${user.username} ]`}</span>
-        </h1>
+        <h1 className="text-3xl font-extrabold mb-1">Edit Forum</h1>
         <hr />
       </header>
       <form onSubmit={handleSubmit} className="w-full px-2 flex flex-col gap-3">
-        <UserImageUploader
-          file={file}
-          setFile={setFile}
-          setImageUrl={setImageUrl}
-          imageUrl={imageUrl}
-        />
         <div className="flex flex-col gap-3 w-full max-w-[540px]">
           <Input
             type="text"
-            placeholder="Full Name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             required
           />
           <Textarea
-            placeholder="About"
-            className="max-h-56"
-            value={about}
-            onChange={(e) => setAbout(e.target.value)}
+            placeholder="Body"
+            className="max-h-56 h-56"
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
             required
           />
-          <Select value={gender} onValueChange={setGender}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select a gender" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Gender</SelectLabel>
-                <SelectItem value="Male">Male</SelectItem>
-                <SelectItem value="Female">Female</SelectItem>
-                <SelectItem value="Other">Other</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Button className="w-fit" disabled={updating}>
-            {updating ? (
+          <Button className="w-fit" disabled={forumsUploading}>
+            {forumsUploading ? (
               <>
                 <Loader2 className="animate-spin" />
                 <span>Please wait</span>
@@ -161,7 +120,7 @@ const PanelEditUser = () => {
   );
 };
 
-const UserImageUploader = ({ file, setFile, setImageUrl, imageUrl }) => {
+const ForumsImageUploader = ({ file, setFile, setImageUrl }) => {
   const [uploadingFile, setUploadingFile] = useState(false);
   const [uploadedFile, setUploadedFile] = useState("");
 
@@ -195,10 +154,6 @@ const UserImageUploader = ({ file, setFile, setImageUrl, imageUrl }) => {
 
     return () => {};
   }, [file]);
-
-  useEffect(() => {
-    setUploadedFile(imageUrl ?? "");
-  }, [imageUrl]);
 
   return (
     <div className="flex flex-col gap-1 items-center w-fit">
@@ -255,4 +210,4 @@ const UserImageUploader = ({ file, setFile, setImageUrl, imageUrl }) => {
   );
 };
 
-export default PanelEditUser;
+export default PanelEditForum;

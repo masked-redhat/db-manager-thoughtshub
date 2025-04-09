@@ -22,6 +22,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
+import { useNavigate } from "react-router";
+import { productionPath } from "../../../constants/path";
 
 const ForumCard = ({ data, fetchForums }) => {
   const { token } = useToken();
@@ -113,6 +115,7 @@ const ForumCard = ({ data, fetchForums }) => {
 };
 
 const ActionBtn = ({ forumId, token, fetchForums }) => {
+  const navigate = useNavigate();
   const [deleting, setDeleting] = useState(false);
 
   const handleDeleteForum = async () => {
@@ -138,7 +141,11 @@ const ActionBtn = ({ forumId, token, fetchForums }) => {
         <HiOutlineDotsVertical />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem disabled={true}>Edit</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => navigate(`${productionPath}/edit-forums/${forumId}`)}
+        >
+          Edit
+        </DropdownMenuItem>
         <DropdownMenuItem
           className="cursor-pointer"
           disabled={deleting}
