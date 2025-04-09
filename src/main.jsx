@@ -18,6 +18,7 @@ import PanelCreateUser from "./components/users/PanelCreateUser.jsx";
 import { productionPath } from "../constants/path.js";
 import PanelEditUser from "./components/users/PanelEditUser.jsx";
 import PanelEditForum from "./components/forums/PanelEditForum.jsx";
+import PanelEditNews from "./components/news/PanelEditNews.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, Component: PanelHome },
       { path: "create-news", Component: PanelCreateNews },
+      { path: "edit-news/:newsId", Component: PanelEditNews },
       { path: "news", Component: PanelNews },
       { path: "categories", Component: PanelGetCategories },
       { path: "create-new-category", Component: PanelCreateCategory },

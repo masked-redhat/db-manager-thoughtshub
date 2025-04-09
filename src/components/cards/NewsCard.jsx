@@ -18,6 +18,8 @@ import { toast } from "sonner";
 import { newsUploadUrl } from "../../../constants/server";
 import { useToken } from "../../providers/AdminTokenProvider";
 import { requestAuth } from "../../../utils/request";
+import { useNavigate } from "react-router";
+import { productionPath } from "../../../constants/path";
 
 const NewsCard = ({ data, fetchNews }) => {
   const { token } = useToken();
@@ -79,6 +81,7 @@ const NewsCard = ({ data, fetchNews }) => {
 };
 
 const ActionBtn = ({ newsId, token, fetchNews, className }) => {
+  const navigate = useNavigate();
   const [deleting, setDeleting] = useState(false);
 
   const handleDeleteNews = async () => {
@@ -109,7 +112,11 @@ const ActionBtn = ({ newsId, token, fetchNews, className }) => {
         <HiOutlineDotsVertical />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem disabled={true}>Edit</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => navigate(`${productionPath}/edit-news/${newsId}`)}
+        >
+          Edit
+        </DropdownMenuItem>
         <DropdownMenuItem
           className="cursor-pointer"
           disabled={deleting}
