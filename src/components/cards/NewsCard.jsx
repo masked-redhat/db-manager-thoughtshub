@@ -20,9 +20,13 @@ import { useToken } from "../../providers/AdminTokenProvider";
 import { requestAuth } from "../../../utils/request";
 import { useNavigate } from "react-router";
 import { productionPath } from "../../../constants/path";
+import { Button } from "@/components/ui/button";
 
 const NewsCard = ({ data, fetchNews }) => {
   const { token } = useToken();
+
+  const [lang, setLang] = useState("English");
+
   return (
     <div className="lg:w-lg w-full border border-gray-300 rounded-xl shadow-md flex flex-col p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white gap-4 relative">
       <div className="absolute top-6 right-6 w-fit rounded-full p-0">
@@ -52,7 +56,9 @@ const NewsCard = ({ data, fetchNews }) => {
         <div className="text-xs text-gray-500 break-all">
           {data.id.toUpperCase()}
         </div>
-        <div className="text-2xl font-semibold">{data.title}</div>
+        <div className="text-2xl font-semibold">
+          {lang === "English" ? data.title : data.titleHindi ?? data.title}
+        </div>
 
         <div className="flex text-xs gap-3">
           <div className="text-gray-500">
@@ -74,7 +80,25 @@ const NewsCard = ({ data, fetchNews }) => {
 
         <Badge>{data.category}</Badge>
 
-        <ScrollArea className="text-sm h-[150px]">{data.body}</ScrollArea>
+        <ScrollArea className="text-sm h-[150px]">
+          {lang === "English" ? data.body : data.bodyHindi ?? data.body}
+        </ScrollArea>
+
+        <div className="flex gap-2 items-center *:cursor-pointer">
+          <Button
+            variant={lang === "English" ? "secondary" : "tertiary"}
+            onClick={() => setLang("English")}
+          >
+            En
+          </Button>
+          <Button
+            variant={lang === "Hindi" ? "secondary" : "tertiary"}
+            onClick={() => setLang("Hindi")}
+            className="font-bold"
+          >
+            हि
+          </Button>
+        </div>
       </div>
     </div>
   );
