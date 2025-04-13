@@ -134,6 +134,11 @@
     body {
         @apply bg-background text-foreground;
     }
+
+    .w-full\! {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
 }
 
 @keyframes loader {

@@ -18,6 +18,8 @@ const PanelCreateNews = () => {
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [titleHindi, setTitleHindi] = useState("");
+  const [bodyHindi, setBodyHindi] = useState("");
   const [newsUrl, setNewsUrl] = useState("");
 
   const [newsUploading, setNewsUploading] = useState(false);
@@ -28,6 +30,8 @@ const PanelCreateNews = () => {
     setTitle("");
     setBody("");
     setNewsUrl("");
+    setTitleHindi("");
+    setBodyHindi("");
   };
 
   const handleSubmit = async (e) => {
@@ -35,7 +39,15 @@ const PanelCreateNews = () => {
 
     setNewsUploading(true);
 
-    const data = { title, body, imageUrl, category, newsUrl };
+    const data = {
+      title,
+      body,
+      imageUrl,
+      category,
+      newsUrl,
+      titleHindi,
+      bodyHindi,
+    };
 
     const response = await requestAuth(newsUploadUrl, "POST", token, data);
 
@@ -62,21 +74,39 @@ const PanelCreateNews = () => {
       </header>
       <form onSubmit={handleSubmit} className="w-full px-2 flex flex-col gap-3">
         <ImageUploader setImageUrl={setImageUrl} imageUrl={imageUrl} />
-        <div className="flex flex-col gap-3 w-full max-w-[540px]">
-          <Input
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-          <Textarea
-            placeholder="Body"
-            className="max-h-56"
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            required
-          />
+        <div className="flex flex-col gap-3 *:max-w-[540px]">
+          <div className="flex gap-3 flex-wrap w-full! *:max-w-[540px]">
+            <Input
+              type="text"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+            <Input
+              type="text"
+              placeholder="Title (Hindi)"
+              value={titleHindi}
+              onChange={(e) => setTitleHindi(e.target.value)}
+              required
+            />
+          </div>
+          <div className="flex gap-3 flex-wrap w-full! *:max-w-[540px]">
+            <Textarea
+              placeholder="Body"
+              className="max-h-56"
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              required
+            />
+            <Textarea
+              placeholder="Body (Hindi)"
+              className="max-h-56"
+              value={bodyHindi}
+              onChange={(e) => setBodyHindi(e.target.value)}
+              required
+            />
+          </div>
           <SelectCategory category={category} setCategory={setCategory} />
           <Input
             type="text"
