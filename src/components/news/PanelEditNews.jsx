@@ -33,7 +33,16 @@ const PanelEditNews = () => {
 
     setNewsUploading(true);
 
-    const data = { title, body, imageUrl, category, newsUrl, newsId };
+    const data = {
+      title,
+      body,
+      imageUrl,
+      category,
+      newsUrl,
+      newsId,
+      titleHindi,
+      bodyHindi,
+    };
 
     const response = await requestAuth(newsUploadUrl, "PUT", token, data);
 
