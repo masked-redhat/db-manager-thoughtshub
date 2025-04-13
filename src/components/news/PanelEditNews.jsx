@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router";
 import { productionPath } from "../../../constants/path";
 import ImageUploader from "../ImageUploader";
 import PleaseWait from "../PleaseWait";
+import SubmitRight from "../SubmitRight";
 
 const PanelEditNews = () => {
   const { newsId } = useParams();

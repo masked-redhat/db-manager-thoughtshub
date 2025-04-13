@@ -16,6 +16,7 @@ const ImageUploader = ({ setImageUrl, imageUrl }) => {
   const [file, setFile] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState("");
+  const [changedByimageUrl, setChangedByimageUrl] = useState(false);
 
   const uploadFileAndShow = async () => {
     setUploading(true);
@@ -51,11 +52,11 @@ const ImageUploader = ({ setImageUrl, imageUrl }) => {
   }, [file]);
 
   useEffect(() => {
-    setImageUrl(imageUrl ?? "");
-  }, []);
-
-  useEffect(() => {
     if (imageUrl === "") setFile("");
+    else if (imageUrl !== "" && changedByimageUrl === false) {
+      setUploadedFile(imageUrl);
+      setChangedByimageUrl(true);
+    }
   }, [imageUrl]);
 
   return (
