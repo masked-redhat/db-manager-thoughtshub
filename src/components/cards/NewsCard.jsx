@@ -84,7 +84,7 @@ const NewsCard = ({ data, fetchNews }) => {
           {lang === "English" ? data.body : data.bodyHindi ?? data.body}
         </ScrollArea>
 
-        <div className="flex gap-2 items-center *:cursor-pointer">
+        <div className="flex gap-2 items-center *:cursor-pointer mt-auto">
           <Button
             variant={lang === "English" ? "secondary" : "tertiary"}
             onClick={() => setLang("English")}
