@@ -74,6 +74,17 @@ const Sidebar = () => {
 
       <hr />
 
+      <SideBarGroup title="Reports">
+        <NavLink to="user-reports" end>
+          Users
+        </NavLink>
+        <NavLink to="forum-reports" end>
+          Forums
+        </NavLink>
+      </SideBarGroup>
+
+      <hr />
+
       <SideBarGroup title="Logs">
         <li>Logs</li>
         <li>Infos</li>

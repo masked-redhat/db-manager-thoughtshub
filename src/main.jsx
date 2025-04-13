@@ -19,6 +19,8 @@ import { productionPath } from "../constants/path.js";
 import PanelEditUser from "./components/users/PanelEditUser.jsx";
 import PanelEditForum from "./components/forums/PanelEditForum.jsx";
 import PanelEditNews from "./components/news/PanelEditNews.jsx";
+import PanelReportUser from "./components/reports/PanelReportUser.jsx";
+import PanelReportForums from "./components/reports/PanelReportForums.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,8 @@ const router = createBrowserRouter([
       { path: "users", Component: PanelUsers },
       { path: "create-user", Component: PanelCreateUser },
       { path: "edit-user/:id", Component: PanelEditUser },
+      { path: "user-reports", Component: PanelReportUser },
+      { path: "forum-reports", Component: PanelReportForums },
     ],
   },
 ]);
