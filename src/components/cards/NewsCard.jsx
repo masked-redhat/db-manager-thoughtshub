@@ -59,8 +59,8 @@ const NewsCard = ({ data, fetchNews }) => {
         <div className="text-2xl font-semibold">
           {lang === "English"
             ? data.title
-            : data.hindiTitle.length() !== 0
-            ? data.hindiTitle
+            : data.hindiTitle.trim().length !== 0
+            ? data.hindiTitle.trim()
             : data.title}
         </div>
 
@@ -87,8 +87,8 @@ const NewsCard = ({ data, fetchNews }) => {
         <ScrollArea className="text-sm h-[150px]">
           {lang === "English"
             ? data.body
-            : data.hindiBody.length() !== 0
-            ? data.hindiBody
+            : data.hindiBody.trim().length !== 0
+            ? data.hindiBody.trim()
             : data.title}
         </ScrollArea>
 
