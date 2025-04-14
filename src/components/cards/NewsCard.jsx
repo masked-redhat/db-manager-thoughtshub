@@ -89,7 +89,7 @@ const NewsCard = ({ data, fetchNews }) => {
             ? data.body
             : data.hindiBody !== null && data.hindiBody?.trim().length !== 0
             ? data.hindiBody?.trim()
-            : data.title}
+            : data.body}
         </ScrollArea>
 
         <div className="flex gap-2 items-center *:cursor-pointer mt-auto">
