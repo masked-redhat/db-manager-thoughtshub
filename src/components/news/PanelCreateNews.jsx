@@ -45,8 +45,8 @@ const PanelCreateNews = () => {
       imageUrl,
       category,
       newsUrl,
-      titleHindi,
-      bodyHindi,
+      hindiTitle: titleHindi,
+      hindiBody: bodyHindi,
     };
 
     const response = await requestAuth(newsUploadUrl, "POST", token, data);

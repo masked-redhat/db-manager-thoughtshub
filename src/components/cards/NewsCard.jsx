@@ -57,7 +57,7 @@ const NewsCard = ({ data, fetchNews }) => {
           {data.id.toUpperCase()}
         </div>
         <div className="text-2xl font-semibold">
-          {lang === "English" ? data.title : data.titleHindi ?? data.title}
+          {lang === "English" ? data.title : data.hindiTitle ?? data.title}
         </div>
 
         <div className="flex text-xs gap-3">
@@ -81,7 +81,7 @@ const NewsCard = ({ data, fetchNews }) => {
         <Badge>{data.category}</Badge>
 
         <ScrollArea className="text-sm h-[150px]">
-          {lang === "English" ? data.body : data.bodyHindi ?? data.body}
+          {lang === "English" ? data.body : data.hindiBody ?? data.body}
         </ScrollArea>
 
         <div className="flex gap-2 items-center *:cursor-pointer mt-auto">

@@ -40,8 +40,8 @@ const PanelEditNews = () => {
       category,
       newsUrl,
       newsId,
-      titleHindi,
-      bodyHindi,
+      hindiTitle: titleHindi,
+      hindiBody: bodyHindi,
     };
 
     const response = await requestAuth(newsUploadUrl, "PUT", token, data);
