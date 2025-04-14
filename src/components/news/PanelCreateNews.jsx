@@ -88,7 +88,6 @@ const PanelCreateNews = () => {
               placeholder="Title (Hindi)"
               value={titleHindi}
               onChange={(e) => setTitleHindi(e.target.value)}
-              required
             />
           </div>
           <div className="flex gap-3 flex-wrap w-full! *:max-w-[540px]">
@@ -104,7 +103,6 @@ const PanelCreateNews = () => {
               className="max-h-56"
               value={bodyHindi}
               onChange={(e) => setBodyHindi(e.target.value)}
-              required
             />
           </div>
           <SelectCategory category={category} setCategory={setCategory} />
