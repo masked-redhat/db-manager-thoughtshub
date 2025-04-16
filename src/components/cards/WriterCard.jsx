@@ -3,10 +3,10 @@ import React from "react";
 const WriterCard = ({ data }) => {
   return (
     <div className="flex gap-2 items-center">
-      {typeof data.profileImageUrl === "string" ? (
-        data.profileImageUrl.length !== 0 ? (
+      {typeof data?.profileImageUrl === "string" ? (
+        data?.profileImageUrl?.length !== 0 ? (
           <img
-            src={data?.profileImageUrl}
+            src={data?.profileImageUrl ?? ""}
             alt="Error"
             className="w-11 h-11 rounded-full object-cover"
           />
