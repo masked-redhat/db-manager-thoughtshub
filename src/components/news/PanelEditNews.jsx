@@ -68,8 +68,8 @@ const PanelEditNews = () => {
       const result = await response.json();
       setTitle(result.news.title);
       setBody(result.news.body);
-      setTitleHindi(result.news.titleHindi);
-      setBodyHindi(result.news.bodyHindi);
+      setTitleHindi(result.news.hindiTitle);
+      setBodyHindi(result.news.hindiBody);
       setCategory(result.news.category);
       setImageUrl(result.news.imageUrl);
       setNewsUrl(result.news.newsUrl);
