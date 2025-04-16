@@ -3,13 +3,18 @@ import React from "react";
 const WriterCard = ({ data }) => {
   return (
     <div className="flex gap-2 items-center">
-      {typeof data.profileImageUrl === "string" &&
-      data.profileImageUrl.length !== 0 ? (
-        <img
-          src={data.profileImageUrl}
-          alt="Error"
-          className="w-11 h-11 rounded-full object-cover"
-        />
+      {typeof data.profileImageUrl === "string" ? (
+        data.profileImageUrl.length !== 0 ? (
+          <img
+            src={data?.profileImageUrl}
+            alt="Error"
+            className="w-11 h-11 rounded-full object-cover"
+          />
+        ) : (
+          <div className="flex items-center justify-center bg-black text-white w-11 h-11 rounded-full capitalize select-none">
+            {data.fullName[0]}
+          </div>
+        )
       ) : (
         <div className="flex items-center justify-center bg-black text-white w-11 h-11 rounded-full capitalize select-none">
           {data.fullName[0]}
