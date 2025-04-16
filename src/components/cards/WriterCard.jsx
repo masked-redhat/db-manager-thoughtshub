@@ -12,18 +12,18 @@ const WriterCard = ({ data }) => {
           />
         ) : (
           <div className="flex items-center justify-center bg-black text-white w-11 h-11 rounded-full capitalize select-none">
-            {data.fullName[0]}
+            {data?.fullName[0] ?? "."}
           </div>
         )
       ) : (
         <div className="flex items-center justify-center bg-black text-white w-11 h-11 rounded-full capitalize select-none">
-          {data.fullName[0]}
+          {data?.fullName[0] ?? "."}
         </div>
       )}
 
       <div className="flex flex-col w-fit">
         <p className="font-bold text-lg -mb-1 align-middle -mt-1.5">
-          {data.fullName}
+          {data?.fullName ?? "admin"}
         </p>
         <p className="text-xs font-inter flex items-center gap-1">
           <span className="font-bold">@</span> {data.username}
