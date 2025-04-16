@@ -26,7 +26,7 @@ const WriterCard = ({ data }) => {
           {data?.fullName ?? "admin"}
         </p>
         <p className="text-xs font-inter flex items-center gap-1">
-          <span className="font-bold">@</span> {data.username}
+          <span className="font-bold">@</span> {data?.username ?? "admin"}
         </p>
       </div>
     </div>
