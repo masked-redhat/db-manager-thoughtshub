@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { requestAuth } from "../../../utils/request";
-import { forumsUploadUrl, getForumsUrl } from "../../../constants/server";
+import { deleteForumUrl, getForumsUrl } from "../../../constants/server";
 import { Button } from "@/components/ui/button";
 import { useToken } from "../../providers/AdminTokenProvider";
 import { toast, Toaster } from "sonner";
@@ -28,7 +28,7 @@ const PanelEditForum = () => {
 
     const data = { title, body, forumId };
 
-    const response = await requestAuth(forumsUploadUrl, "PUT", token, data);
+    const response = await requestAuth(deleteForumUrl, "PUT", token, data);
 
     const result = await response.json();
     if (response.ok) {
