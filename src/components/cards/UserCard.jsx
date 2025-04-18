@@ -109,7 +109,6 @@ const UserCard = ({ data, fetchUsers }) => {
             Number(data.Profile?.createDate ?? data.createDate)
           ).toLocaleString()}
         </div>
-        {console.log(data.Profile?.createDate, data.Profile?.updateDate)}
         {data.Profile?.createDate !== data.Profile?.updateDate && (
           <TooltipProvider>
             <Tooltip>
