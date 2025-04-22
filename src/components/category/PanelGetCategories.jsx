@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { requestAuth } from "../../../utils/request";
-import { createCategoryUrl, getCategoriesUrl } from "../../../constants/server";
+import { createCategoryUrl } from "../../../constants/server";
 import {
   Tooltip,
   TooltipContent,
@@ -19,7 +19,7 @@ const PanelGetCategories = () => {
 
   const handleGetCategories = async () => {
     setLoading(true);
-    const response = await requestAuth(getCategoriesUrl, "GET");
+    const response = await requestAuth(createCategoryUrl, "GET");
 
     if (response.ok) {
       const result = await response.json();

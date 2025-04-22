@@ -12,7 +12,6 @@ export const getForumsByOffsetUrl = `${apiUrl}/forums/bo`;
 export const getForumsCountUrl = `${apiUrl}/forums/pages`;
 export const getNewsByOffsetUrl = `${apiUrl}/news/bo`;
 export const getNewsCountUrl = `${apiUrl}/news/pages`;
-export const getCategoriesUrl = `${apiUrl}/categories`;
 export const deleteAllNewsUrl = `${apiUrl}/admin/all/news`;
 export const deleteAllForumsUrl = `${apiUrl}/admin/all/forums`;
 export const createCategoryUrl = `${apiUrl}/admin/categories`;
