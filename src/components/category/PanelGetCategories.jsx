@@ -14,12 +14,13 @@ import { toast, Toaster } from "sonner";
 import PleaseWait from "../PleaseWait";
 
 const PanelGetCategories = () => {
+  const { token } = useToken();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
 
   const handleGetCategories = async () => {
     setLoading(true);
-    const response = await requestAuth(createCategoryUrl, "GET");
+    const response = await requestAuth(createCategoryUrl, "GET", token);
 
     if (response.ok) {
       const result = await response.json();

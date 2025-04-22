@@ -7,11 +7,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { requestAuth } from "../../../utils/request";
+import { useToken } from "../../providers/AdminTokenProvider";
 
 const SelectCategory = ({ category, setCategory, className = "" }) => {
+  const { token } = useToken();
   const [categories, setCategories] = useState([]);
   const fetchCategoriesAndSet = async () => {
-    const response = await fetch(getCategoriesUrl);
+    const response = await requestAuth(getCategoriesUrl, "GET", token);
 
     const result = await response.json();
     if (response.ok)
