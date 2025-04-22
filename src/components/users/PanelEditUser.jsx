@@ -29,6 +29,7 @@ const PanelEditUser = () => {
 
   const [imageUrl, setImageUrl] = useState("");
   const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [about, setAbout] = useState("");
   const [gender, setGender] = useState(undefined);
   const [user, setUser] = useState({});
@@ -42,6 +43,7 @@ const PanelEditUser = () => {
 
     const data = {
       userId: id,
+      username,
       fullName,
       about,
       gender,
@@ -51,6 +53,7 @@ const PanelEditUser = () => {
     const response = await requestAuth(getUserUrl, "PUT", token, data);
 
     const result = await response.json();
+    console.log(result);
     if (response.ok) {
       toast("User updated", {
         description: `User updated with given information`,
@@ -79,6 +82,7 @@ const PanelEditUser = () => {
       setAbout(result.user?.about ?? "");
       setGender(result.user?.gender ?? undefined);
       setImageUrl(result.user?.profileImageUrl ?? "");
+      setUsername(result.user?.username ?? "");
     }
   };
 
