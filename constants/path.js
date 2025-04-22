@@ -1,1 +1,1 @@
-export const productionPath = "/dist"
+export const productionPath = "/admin-panel"
