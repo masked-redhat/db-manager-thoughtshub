@@ -7,6 +7,7 @@ import {
   ReactNode,
   Dispatch,
   SetStateAction,
+  useCallback,
 } from "react";
 
 type AuthContextType = {
@@ -19,7 +20,7 @@ const AuthTokenContext = createContext<AuthContextType | null>(null);
 
 export function AuthTokenProvider({ children }: { children: ReactNode }) {
   const [authToken, setAuthToken] = useState<string | null>(null);
-  const reset = () => setAuthToken(null);
+  const reset = useCallback(() => setAuthToken(null), []);
 
   return (
     <AuthTokenContext.Provider value={{ authToken, setAuthToken, reset }}>
