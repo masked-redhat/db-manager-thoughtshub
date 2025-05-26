@@ -5,7 +5,7 @@ import PleaseWait from "@/components/PleaseWait";
 import TitleWithRefreshBtn from "@/components/TitleWithRefreshBtn";
 import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function Page() {
@@ -15,23 +15,22 @@ export default function Page() {
   const { authToken } = useAuthToken();
   const client = new APIClient(authToken);
 
-  const getFeedbacks = async (withLoading = false) => {
+  const getFeedbacks = useCallback(async (withLoading = false) => {
     if (withLoading) setLoading(true);
     setRefreshing(true);
 
     const result = await client.fetchAdmin("GET", "/feedback");
     if (result.ok) {
       setFeedbacks(result.json.feedbacks);
-    } else toast("Feedbacks fetch failed", { description: result.json.message });
+    } else
+      toast("Feedbacks fetch failed", { description: result.json.message });
 
     if (withLoading) setLoading(false);
     setRefreshing(false);
-  };
+  }, []);
 
   useEffect(() => {
     getFeedbacks(true);
-
-    return () => {};
   }, []);
 
   return (
@@ -46,11 +45,15 @@ export default function Page() {
         {loading ? (
           <PleaseWait text={false} />
         ) : feedbacks.length === 0 ? (
-          <p className="font-medium text-lg text-gray-700">No feedbacks found</p>
+          <p className="font-medium text-lg text-gray-700">
+            No feedbacks found
+          </p>
         ) : (
           <div className="flex flex-wrap md:gap-5 gap-3">
             {feedbacks.map((f) => {
-              return <FeedbackCard key={f.id} feedback={f} refresh={getFeedbacks} />
+              return (
+                <FeedbackCard key={f.id} feedback={f} refresh={getFeedbacks} />
+              );
             })}
           </div>
         )}

@@ -5,7 +5,7 @@ import PleaseWait from "@/components/PleaseWait";
 import TitleWithRefreshBtn from "@/components/TitleWithRefreshBtn";
 import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function Page() {
@@ -15,7 +15,7 @@ export default function Page() {
   const { authToken } = useAuthToken();
   const client = new APIClient(authToken);
 
-  const getReports = async (withLoading = false) => {
+  const getReports = useCallback(async (withLoading = false) => {
     if (withLoading) setLoading(true);
     setRefreshing(true);
 
@@ -26,12 +26,10 @@ export default function Page() {
 
     if (withLoading) setLoading(false);
     setRefreshing(false);
-  };
+  }, []);
 
   useEffect(() => {
     getReports(true);
-
-    return () => {};
   }, []);
 
   return (

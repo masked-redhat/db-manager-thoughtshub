@@ -1,6 +1,6 @@
 import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import PleaseWait from "./PleaseWait";
 import { APIClient } from "@/services/BackendService";
 import { toast } from "sonner";
@@ -9,7 +9,7 @@ export default function LogoutBtn() {
   const { reset, authToken } = useAuthToken();
   const [loading, setLoading] = useState(false);
 
-  const onClick = async () => {
+  const onClick = useCallback(async () => {
     setLoading(true);
 
     const client = new APIClient(authToken);
@@ -20,7 +20,7 @@ export default function LogoutBtn() {
     } else toast("Logout failed", { description: result.json.message });
 
     setLoading(false);
-  };
+  }, [authToken, reset]);
 
   return (
     <Button disabled={loading} onClick={onClick}>

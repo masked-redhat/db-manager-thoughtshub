@@ -17,21 +17,18 @@ export default function Layout_({
   const { authToken, setAuthToken } = useAuthToken();
   const [checking, setChecking] = useState(false);
 
-  const checkAndSetAuthToken = async () => {
-    setChecking(true);
-
-    const authToken = APIClient.getAuthTokenFromBrowser();
-    const client = new APIClient(authToken);
-    const isOk = await client.checkAuthToken();
-    if (isOk) setAuthToken(authToken);
-
-    setChecking(false);
-  };
-
   useEffect(() => {
-    checkAndSetAuthToken();
+    const checkAndSetAuthToken = async () => {
+      setChecking(true);
 
-    return () => {};
+      const authToken = APIClient.getAuthTokenFromBrowser();
+      const client = new APIClient(authToken);
+      const isOk = await client.checkAuthToken();
+      if (isOk) setAuthToken(authToken);
+
+      setChecking(false);
+    };
+    checkAndSetAuthToken();
   }, []);
 
   return (

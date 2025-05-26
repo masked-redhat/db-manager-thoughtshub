@@ -4,7 +4,7 @@ import PleaseWait from "@/components/PleaseWait";
 import TitleWithRefreshBtn from "@/components/TitleWithRefreshBtn";
 import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import CategoryCard from "@/components/cards/CategoryCard";
 import { Input } from "@/components/ui/input";
@@ -31,7 +31,7 @@ export default function Page() {
   const client = new APIClient(authToken);
   const [newCat, setNewCat] = useState("");
 
-  const getCategories = async (withLoading = false) => {
+  const getCategories = useCallback(async (withLoading = false) => {
     if (withLoading) setLoading(true);
     setRefreshing(true);
 
@@ -43,15 +43,13 @@ export default function Page() {
 
     if (withLoading) setLoading(false);
     setRefreshing(false);
-  };
+  }, []);
 
   useEffect(() => {
     getCategories(true);
-
-    return () => {};
   }, []);
 
-  const createNewCategory = async () => {
+  const createNewCategory = useCallback(async () => {
     setCreating(true);
 
     const result = await client.fetchAdmin("POST", "/category", {
@@ -65,7 +63,7 @@ export default function Page() {
       toast("Categories creation failed", { description: result.json.message });
 
     setCreating(false);
-  };
+  }, [newCat]);
 
   return (
     <div className="w-full h-full flex flex-col gap-3 md:p-5 p-3 !pb-0 relative">

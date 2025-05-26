@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import PleaseWait from "./PleaseWait";
 import {
   SheetContent,
@@ -41,7 +41,13 @@ const formSchema = z.object({
 
 export default function NewsFilter({ setValues }: { setValues: Function }) {
   const [loading, setLoading] = useState(false);
-  const [filtersApplied, setFiltersApplied] = useState<any>({
+  const [filtersApplied, setFiltersApplied] = useState<{
+    title: boolean;
+    body: boolean;
+    hindiTitle: boolean;
+    hindiBody: boolean;
+    status: boolean;
+  }>({
     title: false,
     body: false,
     hindiTitle: false,
@@ -60,17 +66,21 @@ export default function NewsFilter({ setValues }: { setValues: Function }) {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema> | any) => {
-    const filters: any = {};
-    for (const key in values)
-      if (filtersApplied[key] === true) filters[key] = values[key];
+  const onSubmit = useCallback(
+    async (values: z.infer<typeof formSchema>) => {
+      const filters: any = {};
+      for (const key in values)
+        if (filtersApplied[key as keyof typeof filtersApplied])
+          filters[key] = values[key as keyof typeof values];
 
-    setValues(filters);
-  };
+      setValues(filters);
+    },
+    [filtersApplied]
+  );
 
-  const cfa = (val: boolean | any, name: string) => {
+  const cfa = useCallback((val: boolean | any, name: string) => {
     setFiltersApplied({ ...filtersApplied, [name]: val });
-  };
+  }, []);
 
   return (
     <SheetContent>

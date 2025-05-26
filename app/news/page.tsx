@@ -6,7 +6,7 @@ import TitleWithRefreshBtn from "@/components/TitleWithRefreshBtn";
 import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
 import { TbFilter, TbFilterX } from "react-icons/tb";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
   Select,
@@ -33,44 +33,43 @@ export default function Page() {
   const [offsetOver, setOffsetOver] = useState(false);
   const client = new APIClient(authToken);
 
-  const getNews = async (
-    withLoading: boolean = false,
-    values: any = {},
-    offsetManual: any = null
-  ) => {
-    if (withLoading) setLoading(true);
-    setRefreshing(true);
+  const getNews = useCallback(
+    async (
+      withLoading: boolean = false,
+      values: any = {},
+      offsetManual: any = null
+    ) => {
+      if (withLoading) setLoading(true);
+      setRefreshing(true);
 
-    let valuesForQuery = "";
-    for (const key in values) {
-      valuesForQuery += `&${key}=${values[key]}`;
-    }
-    if (valuesForQuery.length > 0) valuesForQuery += "&all=false";
+      let valuesForQuery = "";
+      for (const key in values) {
+        valuesForQuery += `&${key}=${values[key]}`;
+      }
+      if (valuesForQuery.length > 0) valuesForQuery += "&all=false";
 
-    const result = await client.fetchAdmin(
-      "GET",
-      `/news?order=${JSON.stringify(order)}${valuesForQuery}&offset=${
-        offsetManual ?? offset
-      }`
-    );
-    if (result.ok) {
-      setNews(result.json.news);
-    } else toast("News fetch failed", { description: result.json.message });
+      const result = await client.fetchAdmin(
+        "GET",
+        `/news?order=${JSON.stringify(order)}${valuesForQuery}&offset=${
+          offsetManual ?? offset
+        }`
+      );
+      if (result.ok) {
+        setNews(result.json.news);
+      } else toast("News fetch failed", { description: result.json.message });
 
-    if (withLoading) setLoading(false);
-    setRefreshing(false);
-  };
+      if (withLoading) setLoading(false);
+      setRefreshing(false);
+    },
+    [offset]
+  );
 
   useEffect(() => {
     getNews(true, filters);
-
-    return () => {};
   }, []);
 
   useEffect(() => {
     getNews(false, filters);
-
-    return () => {};
   }, [filters, order]);
 
   return (

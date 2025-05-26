@@ -2,7 +2,7 @@
 
 import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import PleaseWait from "@/components/PleaseWait";
 import NewsCard from "@/components/cards/NewsCard";
@@ -23,11 +23,14 @@ function LatestNews() {
   const [loading, setLoading] = useState(false);
   const client = new APIClient(authToken);
 
-  const getNews = async (withLoading: boolean = false) => {
+  const getNews = useCallback(async (withLoading: boolean = false) => {
     if (withLoading) setLoading(true);
     setRefreshing(true);
 
-    const result = await client.fetchAdmin("GET", "/news?status=Published&all=false");
+    const result = await client.fetchAdmin(
+      "GET",
+      "/news?status=Published&all=false"
+    );
     if (result.ok) setNews(result.json.news.slice(0, 10));
     else {
       toast("News fetch failed", { description: result.json.message });
@@ -35,12 +38,10 @@ function LatestNews() {
 
     setRefreshing(false);
     if (withLoading) setLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
     getNews(true);
-
-    return () => {};
   }, []);
 
   return (

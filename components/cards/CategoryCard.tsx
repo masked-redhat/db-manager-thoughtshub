@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
@@ -13,7 +13,7 @@ export default function CategoryCard({ category, refresh }: any) {
   const client = new APIClient(authToken);
   const [deleting, setDeleting] = useState(false);
 
-  const deleteCategory = async () => {
+  const deleteCategory = useCallback(async () => {
     setDeleting(true);
 
     const result = await client.fetchAdmin(
@@ -28,7 +28,7 @@ export default function CategoryCard({ category, refresh }: any) {
     }
 
     setDeleting(false);
-  };
+  }, []);
 
   return (
     <div className="border flex gap-3 p-3 justify-between items-center group max-w-96 w-full h-16">

@@ -5,7 +5,7 @@ import TitleWithRefreshBtn from "@/components/TitleWithRefreshBtn";
 import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
 import { TbFilter, TbFilterX } from "react-icons/tb";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
   Select,
@@ -32,44 +32,43 @@ export default function Page() {
   const [offset, setOffset] = useState<number>(0);
   const client = new APIClient(authToken);
 
-  const getForums = async (
-    withLoading: boolean = false,
-    values: any = {},
-    offsetManual: any = null
-  ) => {
-    if (withLoading) setLoading(true);
-    setRefreshing(true);
+  const getForums = useCallback(
+    async (
+      withLoading: boolean = false,
+      values: any = {},
+      offsetManual: any = null
+    ) => {
+      if (withLoading) setLoading(true);
+      setRefreshing(true);
 
-    let valuesForQuery = "";
-    for (const key in values) {
-      valuesForQuery += `&${key}=${values[key]}`;
-    }
-    if (valuesForQuery.length > 0) valuesForQuery += "&all=false";
+      let valuesForQuery = "";
+      for (const key in values) {
+        valuesForQuery += `&${key}=${values[key]}`;
+      }
+      if (valuesForQuery.length > 0) valuesForQuery += "&all=false";
 
-    const result = await client.fetchAdmin(
-      "GET",
-      `/forums?order=${JSON.stringify(order)}${valuesForQuery}&offset=${
-        offsetManual ?? offset
-      }`
-    );
-    if (result.ok) {
-      setForums(result.json.forums);
-    } else toast("Forums fetch failed", { description: result.json.message });
+      const result = await client.fetchAdmin(
+        "GET",
+        `/forums?order=${JSON.stringify(order)}${valuesForQuery}&offset=${
+          offsetManual ?? offset
+        }`
+      );
+      if (result.ok) {
+        setForums(result.json.forums);
+      } else toast("Forums fetch failed", { description: result.json.message });
 
-    if (withLoading) setLoading(false);
-    setRefreshing(false);
-  };
+      if (withLoading) setLoading(false);
+      setRefreshing(false);
+    },
+    [offset]
+  );
 
   useEffect(() => {
     getForums(true, filters);
-
-    return () => {};
   }, []);
 
   useEffect(() => {
     getForums(false, filters);
-
-    return () => {};
   }, [filters, order]);
 
   return (
