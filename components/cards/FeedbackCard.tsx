@@ -16,10 +16,12 @@ export default function FeedbackCard({ feedback, refresh }: any) {
 
   return (
     <div className="rounded-lg shadow-md sm:w-md w-full overflow-hidden flex flex-col gap-2 group border-t border-black/5">
-      <Writer writer={writer} />
+      <Writer writer={writer ?? {}} />
       <div className="px-4 pt-2 max-h-96 overflow-auto space-y-4">
         <Timestamps timestamps={feedback} />
-        <CardScrollArea className="h-32"><CardBody body={feedback.message} /></CardScrollArea>
+        <CardScrollArea className="h-32">
+          <CardBody body={feedback.message} />
+        </CardScrollArea>
       </div>
     </div>
   );

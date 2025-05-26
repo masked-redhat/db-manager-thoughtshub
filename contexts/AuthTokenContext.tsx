@@ -1,19 +1,18 @@
 "use client";
 
-import { APIClient } from "@/services/BackendService";
 import {
   createContext,
   useContext,
   useState,
   ReactNode,
-  useEffect,
+  Dispatch,
+  SetStateAction,
 } from "react";
 
 type AuthContextType = {
   authToken: string | null;
-  setAuthToken: (token: string | null) => void;
+  setAuthToken: Dispatch<SetStateAction<string | null>>;
   reset: () => void;
-  client: InstanceType<typeof APIClient>;
 };
 
 const AuthTokenContext = createContext<AuthContextType | null>(null);
@@ -21,18 +20,9 @@ const AuthTokenContext = createContext<AuthContextType | null>(null);
 export function AuthTokenProvider({ children }: { children: ReactNode }) {
   const [authToken, setAuthToken] = useState<string | null>(null);
   const reset = () => setAuthToken(null);
-  const [client, setClient] = useState(new APIClient(authToken));
-
-  useEffect(() => {
-    setClient(new APIClient(authToken));
-
-    return () => {};
-  }, [authToken]);
 
   return (
-    <AuthTokenContext.Provider
-      value={{ authToken, setAuthToken, reset, client }}
-    >
+    <AuthTokenContext.Provider value={{ authToken, setAuthToken, reset }}>
       {children}
     </AuthTokenContext.Provider>
   );

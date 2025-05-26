@@ -61,7 +61,7 @@ export default function Page() {
       if (withLoading) setLoading(false);
       setRefreshing(false);
     },
-    [offset]
+    [offset, order]
   );
 
   useEffect(() => {

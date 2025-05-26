@@ -60,7 +60,7 @@ export default function Page() {
       if (withLoading) setLoading(false);
       setRefreshing(false);
     },
-    [offset]
+    [offset, order]
   );
 
   useEffect(() => {
@@ -91,8 +91,9 @@ export default function Page() {
           <button
             className="flex items-center justify-center p-2 rounded-full hover:bg-gray-200 transition-colors"
             onClick={() => {
-              setSheetKey(Date.now().toString());
+              setOrder([["updateDate", "desc"]]);
               setFilters({});
+              setSheetKey(Date.now().toString());
             }}
           >
             <TbFilterX />
@@ -105,6 +106,7 @@ export default function Page() {
           <Select
             defaultValue="updateDate"
             onValueChange={(val) => setOrder([[val, order[0][1]]])}
+            value={order[0][0]}
           >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select a field to order by" />
@@ -120,6 +122,7 @@ export default function Page() {
           <Select
             defaultValue="desc"
             onValueChange={(val) => setOrder([[order[0][0], val]])}
+            value={order[0][1]}
           >
             <SelectTrigger className="w-[90px]">
               <SelectValue placeholder="Select a field to order by" />

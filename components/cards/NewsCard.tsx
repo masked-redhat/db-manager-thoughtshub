@@ -111,12 +111,7 @@ function NewsImage({
           <img src={imageUrl} className="w-full h-full object-contain" />
         )
       )}
-      <Badge
-        className="absolute top-2 right-2 rounded-sm"
-        variant={"secondary"}
-      >
-        {status}
-      </Badge>
+      <Badge className="absolute top-2 right-2 rounded-sm">{status}</Badge>
       <Badge className="absolute bottom-2 right-2 z-10">
         {Validate.goodStringValue(category) ? category : "Not categorised"}
       </Badge>

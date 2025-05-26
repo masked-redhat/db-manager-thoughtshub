@@ -56,7 +56,7 @@ export default function Layout_({
               </div>
               <LogoutBtn />
             </div>
-            <div className="w-full h-[calc(100%-3.3rem)]">{children}</div>
+            <div className="w-full h-[calc(100%-3.3rem)] md:pb-5 pb-3">{children}</div>
           </main>
         </SidebarProvider>
       )}
