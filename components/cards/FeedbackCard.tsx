@@ -32,7 +32,7 @@ export default function FeedbackCard({ feedback, refresh }: any) {
         </div>
       </div>
       <div className="px-4 pt-2 max-h-96 overflow-auto">
-        <p className="md:text-xl text-lg font-black">
+        <p className="md:text-xl text-lg font-black whitespace-pre-line">
           {feedback.message}
         </p>
       </div>

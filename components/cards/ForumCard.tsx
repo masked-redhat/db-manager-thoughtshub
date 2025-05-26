@@ -8,6 +8,7 @@ import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
 import { toast } from "sonner";
 import PleaseWait from "../PleaseWait";
+import DeleteBtn from "../DeleteBtn";
 
 export default function ForumCard({ forum, refresh, small = false }: any) {
   const { authToken } = useAuthToken();
@@ -84,49 +85,34 @@ export default function ForumCard({ forum, refresh, small = false }: any) {
         </div>
 
         <div className="max-h-[300px] overflow-auto">
-            <div className="w-full">
-          {Validate.goodStringValue(forum.title) ? (
-            <h2
-              className={`md:text-2xl text-lg font-black`}
-            >
-              {forum.title}
-            </h2>
-          ) : (
-            <div className="flex items-center gap-2 text-2xl font-black">
-              <p>-</p>
-              <TbError404 />
-            </div>
-          )}
-        </div>
-        <div className="w-full">
-          {Validate.goodStringValue(forum.body) ? (
-            <h2 className="text-gray-600 md:text-base text-sm">
-              {forum.body}
-            </h2>
-          ) : (
-            <div className="flex items-center gap-2 text-gray-600 text-2xl font-black">
-              <p>-</p>
-              <TbError404 />
-            </div>
-          )}
-        </div>
+          <div className="w-full">
+            {Validate.goodStringValue(forum.title) ? (
+              <h2 className={`md:text-2xl text-lg font-black`}>
+                {forum.title}
+              </h2>
+            ) : (
+              <div className="flex items-center gap-2 text-2xl font-black">
+                <p>-</p>
+                <TbError404 />
+              </div>
+            )}
+          </div>
+          <div className="w-full">
+            {Validate.goodStringValue(forum.body) ? (
+              <h2 className="text-gray-600 md:text-base text-sm whitespace-pre-line">
+                {forum.body}
+              </h2>
+            ) : (
+              <div className="flex items-center gap-2 text-gray-600 text-2xl font-black">
+                <p>-</p>
+                <TbError404 />
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="!mt-auto px-4 pb-3 flex items-center justify-between">
-        {small ? null : (
-          <div className="ml-auto flex gap-2 items-center *:cursor-pointer *:*:hover:bg-gray-600 transition-all opacity-0 group-hover:opacity-100">
-            <button onClick={deleteForum} disabled={deleting}>
-              {deleting ? (
-                <PleaseWait text={false} />
-              ) : (
-                <MdDelete
-                  className="shadow rounded-full p-2 bg-black text-white"
-                  size={35}
-                />
-              )}
-            </button>
-          </div>
-        )}
+        {small ? null : <DeleteBtn deleting={deleting} func={deleteForum} />}
       </div>
     </div>
   );

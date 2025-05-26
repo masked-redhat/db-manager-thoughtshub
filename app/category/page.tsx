@@ -21,7 +21,9 @@ import {
 } from "@/components/ui/drawer";
 
 export default function Page() {
-  const [categories, setCategories] = useState<any[]>([]);
+  const [categories, setCategories] = useState<{ name: string; id: string }[]>(
+    []
+  );
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [creating, setCreating] = useState(false);

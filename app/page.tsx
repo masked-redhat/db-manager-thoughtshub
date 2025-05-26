@@ -27,7 +27,7 @@ function LatestNews() {
     if (withLoading) setLoading(true);
     setRefreshing(true);
 
-    const result = await client.fetchAdmin("GET", "/news");
+    const result = await client.fetchAdmin("GET", "/news?status=Published&all=false");
     if (result.ok) setNews(result.json.news.slice(0, 10));
     else {
       toast("News fetch failed", { description: result.json.message });

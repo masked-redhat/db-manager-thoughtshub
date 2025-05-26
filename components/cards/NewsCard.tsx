@@ -11,6 +11,7 @@ import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
 import { toast } from "sonner";
 import PleaseWait from "../PleaseWait";
+import DeleteBtn from "../DeleteBtn";
 
 export default function NewsCard({ news, refresh }: any) {
   const { setData } = useTransfer();
@@ -91,7 +92,9 @@ export default function NewsCard({ news, refresh }: any) {
         </div>
         <div className="w-full">
           {Validate.goodStringValue(body) ? (
-            <h2 className="text-gray-600 md:text-base text-sm">{body}</h2>
+            <h2 className="text-gray-600 md:text-base text-sm whitespace-pre-line">
+              {body}
+            </h2>
           ) : (
             <div className="flex items-center gap-2 text-gray-600 text-2xl font-black">
               <p>-</p>
@@ -147,16 +150,8 @@ export default function NewsCard({ news, refresh }: any) {
               size={35}
             />
           </Link>
-          <button onClick={deleteNews} disabled={deleting}>
-            {deleting ? (
-              <PleaseWait text={false} />
-            ) : (
-              <MdDelete
-                className="shadow rounded-full p-2 bg-black text-white"
-                size={35}
-              />
-            )}
-          </button>
+
+          <DeleteBtn deleting={deleting} func={deleteNews} />
         </div>
       </div>
     </div>

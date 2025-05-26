@@ -35,7 +35,7 @@ export default function ReportForumCard({ report, refresh }: any) {
         </div>
       </div>
       <div className="px-4 pt-2 space-y-2">
-        <p className="md:text-xl text-lg font-black">
+        <p className="md:text-lg font-black whitespace-pre-line">
           {report.reason}
         </p>
         <div>

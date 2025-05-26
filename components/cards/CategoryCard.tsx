@@ -6,6 +6,7 @@ import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
 import { toast } from "sonner";
 import PleaseWait from "../PleaseWait";
+import DeleteBtn from "../DeleteBtn";
 
 export default function CategoryCard({ category, refresh }: any) {
   const { authToken } = useAuthToken();
@@ -30,28 +31,13 @@ export default function CategoryCard({ category, refresh }: any) {
   };
 
   return (
-    <div className="border flex gap-3 p-3 justify-between items-center group min-w-96 w-[30%] h-16">
+    <div className="border flex gap-3 p-3 justify-between items-center group max-w-96 w-full h-16">
       <div className="overflow-auto w-[calc(100%-2rem)]">
         <p className="md:text-xl text-lg font-black whitespace-nowrap">
           {category.name}
         </p>
       </div>
-      <button
-        onClick={deleteCategory}
-        disabled={deleting}
-        className={
-          deleting ? "" : "opacity-0 group-hover:opacity-100 transition-opacity"
-        }
-      >
-        {deleting ? (
-          <PleaseWait text={false} />
-        ) : (
-          <MdDelete
-            className="shadow rounded-full p-2 bg-black text-white"
-            size={35}
-          />
-        )}
-      </button>
+      <DeleteBtn deleting={deleting} func={deleteCategory} />
     </div>
   );
 }
