@@ -26,10 +26,10 @@ export default function DeleteBtn({
         <button
           disabled={deleting}
           className={
-            "cursor-pointer " +
+            "cursor-pointer opacity-100 " +
             (deleting
               ? ""
-              : "opacity-0 group-hover:opacity-100 transition-opacity")
+              : "xl:opacity-0 group-hover:opacity-100 transition-opacity")
           }
         >
           {deleting ? (
