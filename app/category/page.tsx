@@ -35,7 +35,7 @@ export default function Page() {
     if (withLoading) setLoading(true);
     setRefreshing(true);
 
-    const result = await client.fetch("GET", "/categories");
+    const result = await client.fetchAdmin("GET", "/categories");
     if (result.ok) {
       setCategories(result.json.categories);
     } else
