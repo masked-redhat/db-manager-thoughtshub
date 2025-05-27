@@ -3,6 +3,7 @@
 import FeedbackCard from "@/components/cards/FeedbackCard";
 import PleaseWait from "@/components/PleaseWait";
 import TitleWithRefreshBtn from "@/components/TitleWithRefreshBtn";
+import { Button } from "@/components/ui/button";
 import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
 import { useCallback, useEffect, useState } from "react";
@@ -14,12 +15,25 @@ export default function Page() {
   const [refreshing, setRefreshing] = useState(false);
   const { authToken } = useAuthToken();
   const client = new APIClient(authToken);
+  const [selectedPriority, setSelectedPriority] = useState<string | null>(null);
 
-  const getFeedbacks = useCallback(async (withLoading = false) => {
+  const getFeedbacks = async (
+    withLoading = false,
+    withPriority: string | null = null
+  ) => {
     if (withLoading) setLoading(true);
     setRefreshing(true);
 
-    const result = await client.fetchAdmin("GET", "/feedback");
+    const result = await client.fetchAdmin(
+      "GET",
+      `/feedback${
+        withPriority === null
+          ? selectedPriority !== null
+            ? `?status=${selectedPriority}`
+            : ""
+          : `?status=${withPriority}`
+      }`
+    );
     if (result.ok) {
       setFeedbacks(result.json.feedbacks);
     } else
@@ -27,7 +41,13 @@ export default function Page() {
 
     if (withLoading) setLoading(false);
     setRefreshing(false);
-  }, []);
+  };
+
+  const updateSelectedPriority = (val: string) => {
+    if (val === selectedPriority) setSelectedPriority(null);
+    else setSelectedPriority(val);
+    getFeedbacks(false, val === selectedPriority ? null : val);
+  };
 
   useEffect(() => {
     getFeedbacks(true);
@@ -40,6 +60,26 @@ export default function Page() {
         refreshing={refreshing}
         func={() => getFeedbacks()}
       />
+      <div className="flex gap-2 items-center *:cursor-pointer">
+        <Button
+          onClick={() => updateSelectedPriority("Pending")}
+          variant={selectedPriority === "Pending" ? "secondary" : "outline"}
+        >
+          Pending
+        </Button>
+        <Button
+          onClick={() => updateSelectedPriority("Checked")}
+          variant={selectedPriority === "Checked" ? "secondary" : "outline"}
+        >
+          Checked
+        </Button>
+        <Button
+          onClick={() => updateSelectedPriority("Used")}
+          variant={selectedPriority === "Used" ? "secondary" : "outline"}
+        >
+          Used
+        </Button>
+      </div>
 
       <div className="flex flex-wrap md:gap-5 gap-3">
         {loading ? (

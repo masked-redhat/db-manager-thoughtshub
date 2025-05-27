@@ -109,7 +109,7 @@ function UpdateStatusReport({
             />
           </div>
         ) : (
-          <Badge>{priority}</Badge>
+          <Badge className="!text-sm">{priority}</Badge>
         )}
         {editing ? (
           <div className="w-full">
@@ -122,7 +122,7 @@ function UpdateStatusReport({
             />
           </div>
         ) : (
-          <Badge>{status}</Badge>
+          <Badge className="!text-sm">{status}</Badge>
         )}
       </div>
       <div

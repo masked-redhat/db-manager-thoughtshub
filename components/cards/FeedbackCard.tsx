@@ -107,14 +107,14 @@ function UpdateStatusFeedback({
         <div className="w-full">
           <Selection
             className="w-full"
-            items={[["Pending"], ["Used"], ["Checked"]]}
+            items={[["Pending"], ["Checked"], ["Used"]]}
             placeholder="Choose a new status"
             value={status}
             onChange={(val) => setStatus(val)}
           />
         </div>
       ) : (
-        <Badge>{status}</Badge>
+        <Badge className="!text-sm">{status}</Badge>
       )}
       <div
         className={
