@@ -64,7 +64,7 @@ export default function Page() {
   }, [values]);
 
   const getCategories = useCallback(async () => {
-    const result = await client.fetch("GET", "/categories");
+    const result = await client.fetchAdmin("GET", "/categories");
     if (result.ok) setCategories(result.json.categories);
     else toast("Categories fetch failed", { description: result.json.message });
   }, []);
