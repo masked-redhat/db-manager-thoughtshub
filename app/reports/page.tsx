@@ -46,7 +46,7 @@ export default function Page() {
         ) : reports.length === 0 ? (
           <p className="font-medium text-lg text-gray-700">No reports found</p>
         ) : (
-          <div className="flex flex-wrap w-full">
+          <div className="flex flex-wrap w-full md:gap-5 gap-3">
             {reports.map((r) => {
               return (
                 <ReportForumCard key={r.id} report={r} refresh={getReports} />
