@@ -49,7 +49,7 @@ export default function Page() {
   const [editing, setEditing] = useState(false);
   const { data } = useTransfer();
 
-  const resetValues = useCallback(() => {
+  const resetValues = () => {
     setEditing(false);
     setImageUrl(null);
     setValues({
@@ -61,7 +61,7 @@ export default function Page() {
       category: "",
       newsUrl: "",
     });
-  }, [values]);
+  };
 
   const getCategories = useCallback(async () => {
     const result = await client.fetchAdmin("GET", "/categories");
@@ -69,41 +69,38 @@ export default function Page() {
     else toast("Categories fetch failed", { description: result.json.message });
   }, []);
 
-  const submitWithStatus = useCallback(
-    async (status: string) => {
-      setSubmitting(true);
+  const submitWithStatus = async (status: string) => {
+    setSubmitting(true);
 
-      const body = {
-        ...values,
-        status,
-        category:
-          values.category.length === 0 || values.category === "%none%"
-            ? null
-            : values.category,
-        imageUrl: imageUrl,
-      };
+    const body = {
+      ...values,
+      status,
+      category:
+        values.category.length === 0 || values.category === "%none%"
+          ? null
+          : values.category,
+      imageUrl: imageUrl,
+    };
 
-      const result = editing
-        ? await client.fetchAdmin("PUT", "/news", {
-            ...body,
-            newsId: data.news.id,
-          })
-        : await client.fetchAdmin("POST", "/news", body);
-      if (result.ok) {
-        toast(editing ? "News updated" : "News created", {
-          description: result.json.message,
-        });
-        resetValues();
-      } else {
-        toast(`News couldn't be ${editing ? "updated" : "created"}`, {
-          description: result.json.message,
-        });
-      }
+    const result = editing
+      ? await client.fetchAdmin("PUT", "/news", {
+          ...body,
+          newsId: data.news.id,
+        })
+      : await client.fetchAdmin("POST", "/news", body);
+    if (result.ok) {
+      toast(editing ? "News updated" : "News created", {
+        description: result.json.message,
+      });
+      resetValues();
+    } else {
+      toast(`News couldn't be ${editing ? "updated" : "created"}`, {
+        description: result.json.message,
+      });
+    }
 
-      setSubmitting(false);
-    },
-    [values, editing]
-  );
+    setSubmitting(false);
+  };
 
   useEffect(() => {
     getCategories();
