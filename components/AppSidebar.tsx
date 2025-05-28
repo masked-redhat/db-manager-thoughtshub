@@ -50,8 +50,8 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Logs & Activities</SidebarGroupLabel>
           <SidebarMenu>
-            <SidebarMenuButton>Activities</SidebarMenuButton>
-            <SidebarMenuButton>Logs</SidebarMenuButton>
+            <LinkMenuButton href="/activities" name="Activities" />
+            <LinkMenuButton href="/logs" name="Logs" />
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
