@@ -47,7 +47,7 @@ function LatestNews() {
   return (
     <div className="space-y-3">
       <TitleWithRefreshBtn
-        title="Latest news published"
+        title="Latest insights published"
         refreshing={refreshing}
         func={() => getNews(false)}
       />

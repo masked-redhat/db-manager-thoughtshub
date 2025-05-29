@@ -77,7 +77,7 @@ export default function Page() {
       <div className="flex justify-between items-center flex-wrap gap-3">
         <div className="flex gap-3 items-center select-none">
           <TitleWithRefreshBtn
-            title="News"
+            title="Insights"
             refreshing={refreshing}
             func={() => getNews(false, filters)}
           />

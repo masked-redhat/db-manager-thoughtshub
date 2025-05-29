@@ -114,7 +114,7 @@ export default function Page() {
   return (
     <div className="w-full h-full flex flex-col gap-3 md:p-5 p-3">
       <div className="flex flex-wrap gap-3">
-        <Title title={editing ? "Edit News" : "Create News"} />
+        <Title title={(editing ? "Edit" : "Create") + " Insight"} />
         {submitting ? <PleaseWait /> : null}
         <div className="flex flex-wrap gap-3 mt-auto ml-auto *:cursor-pointer">
           <Button

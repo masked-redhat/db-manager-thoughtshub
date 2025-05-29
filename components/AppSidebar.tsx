@@ -24,8 +24,8 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>News</SidebarGroupLabel>
           <SidebarMenu>
-            <LinkMenuButton href="/news" name="News" />
-            <LinkMenuButton href="/news/create" name="Create News" />
+            <LinkMenuButton href="/news" name="Insights" />
+            <LinkMenuButton href="/news/create" name="Create Insight" />
           </SidebarMenu>
         </SidebarGroup>
         <SidebarGroup>
