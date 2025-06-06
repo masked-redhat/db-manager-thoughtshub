@@ -15,9 +15,6 @@ import { MdCancel, MdCheck, MdEdit } from "react-icons/md";
 import Selection from "../Selection";
 
 export default function ReportForumCard({ report, refresh }: any) {
-  const { authToken } = useAuthToken();
-  const client = new APIClient(authToken);
-  //   const [deleting, setDeleting] = useState(false);
   const writer = report.reporter;
   const forum = report.forum;
   const [forumChecking, setForumChecking] = useState(false);

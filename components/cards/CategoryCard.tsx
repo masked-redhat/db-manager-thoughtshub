@@ -1,11 +1,9 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { MdDelete } from "react-icons/md";
 import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
 import { toast } from "sonner";
-import PleaseWait from "../PleaseWait";
 import DeleteBtn from "../DeleteBtn";
 
 export default function CategoryCard({ category, refresh }: any) {

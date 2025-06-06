@@ -288,7 +288,7 @@ const UploadImage = ({ imageUrl, setImageUrl }: any) => {
           }}
           onClick={() => fileUpload?.current?.click()}
         >
-          Browse files
+          Browse/Drop Files
         </div>
       ) : (
         <div

@@ -12,7 +12,6 @@ import { toast } from "sonner";
 import DeleteBtn from "../DeleteBtn";
 import Timestamps from "../Timestamps";
 import { CardBody, CardScrollArea, CardTitle } from "../CardComponents";
-import { ScrollArea } from "../ui/scroll-area";
 
 export default function NewsCard({ news, refresh }: any) {
   const { setData } = useTransfer();
