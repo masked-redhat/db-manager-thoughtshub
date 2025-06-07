@@ -11,6 +11,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { useTransfer } from "@/contexts/TransferCcontext";
 import { MdEdit } from "react-icons/md";
 import Link from "next/link";
+import { Badge } from "../ui/badge";
 
 export default function WordleWordCard({ word, refresh }: any) {
   const { setData } = useTransfer();
@@ -38,7 +39,10 @@ export default function WordleWordCard({ word, refresh }: any) {
 
   return (
     <div className="flex gap-2 p-3 flex-col group max-w-[29rem] w-full rounded-md shadow">
-      <p className="text-xs text-gray-500">{word.day}</p>
+      <div className="flex justify-between items-center gap-2">
+        <p className="text-sm text-black font-urban tracking-wide font-bold">{word.day}</p>
+        <Badge>{word.status}</Badge>
+      </div>
       <div className="capitalize flex gap-2 h-10 justify-between items-center select-none">
         {hidden ? (
           <PiDotsThreeBold
