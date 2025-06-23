@@ -16,9 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${spaceGrotesk} antialiased h-screen`}
-      >
+      <body className={`${spaceGrotesk} antialiased h-screen`}>
         <Providers>
           <Layout_>{children}</Layout_>
         </Providers>

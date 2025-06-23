@@ -3,66 +3,84 @@ class BackendService {
 
     constructor(private authToken: string | null) { }
 
-    fetch = async (requestType: string, pathname: string, body: object | null = null) => {
+    fetch = async (
+        requestType: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD",
+        pathname: string,
+        body: Record<string, unknown> | null = null
+    ): Promise<{ ok: boolean; json: any }> => {
         try {
             const response = await fetch(BackendService.url(pathname), {
                 method: requestType,
                 headers: {
                     "Content-Type": "application/json",
-                    auth_token: this.authToken ?? ""
+                    auth_token: this.authToken ?? "",
                 },
                 ...(BackendService.noBodyRequest(requestType)
                     ? {}
                     : { body: JSON.stringify(body) }),
             });
+
             const result = await response.json();
             return { ok: response.ok, json: result };
         } catch (err) {
-            console.log(err);
+            console.error("API fetch error:", err);
             return { ok: false, json: {} };
         }
     };
 
-    uploadFile = async (file: any) => {
-        let data = new FormData()
-        data.append('file', file)
+    uploadFile = async (file: File): Promise<{ ok: boolean; json: any }> => {
+        const data = new FormData();
+        data.append("file", file);
 
         try {
             const response = await fetch(BackendService.url("/upload"), {
                 method: "POST",
                 headers: {
-                    auth_token: this.authToken ?? ""
+                    auth_token: this.authToken ?? "",
                 },
-                body: data
+                body: data,
             });
+
             const result = await response.json();
             return { ok: response.ok, json: result };
         } catch (err) {
-            console.log(err);
+            console.error("File upload error:", err);
             return { ok: false, json: {} };
         }
-    }
+    };
 
-    fetchAdmin = async (requestType: string, pathname: string, body: object | null = null) =>
-        this.fetch(requestType, "/admin" + pathname, body);
+    fetchAdmin = async (
+        requestType: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD",
+        pathname: string,
+        body: Record<string, unknown> | null = null
+    ): Promise<{ ok: boolean; json: any }> => {
+        return this.fetch(requestType, `/admin${pathname}`, body);
+    };
 
-    static noBodyRequest = (type: string) =>
-        ["GET", "DELETE", "HEAD"].includes(type);
+    checkAuthToken = async (): Promise<boolean> => {
+        const result = await this.fetch("GET", "/profile/me");
+        return (
+            typeof result.json?.message === "string" &&
+            result.json.message !== "Not logged In"
+        );
+    };
 
-    static url = (pathname: string) => this.baseUrl + pathname;
+    static noBodyRequest = (method: string): boolean =>
+        ["GET", "DELETE", "HEAD"].includes(method.toUpperCase());
 
-    checkAuthToken = async () => {
-        const result = await this.fetch("GET", "/profile/me")
-        return typeof result.json?.message === 'string' && result.json.message !== "Not logged In"
-    }
+    static url = (pathname: string): string => `${this.baseUrl}${pathname}`;
 
-    static setAuthTokenInBrowser = (authToken: string) => {
+    static setAuthTokenInBrowser = (authToken: string): void => {
+        if (typeof document === "undefined") return; // Guard for SSR
         const expires = new Date();
-        expires.setTime(expires.getTime() + 1000 * 24 * 60 * 60 * 1000);
-        document.cookie = `authToken=${encodeURIComponent(authToken)}; expires=${expires.toUTCString()}; path=/`;
-    }
+        expires.setTime(expires.getTime() + 1000 * 24 * 60 * 60 * 1000); // ~1000 days
+        document.cookie = `authToken=${encodeURIComponent(
+            authToken
+        )}; expires=${expires.toUTCString()}; path=/`;
+    };
 
-    static getAuthTokenFromBrowser = () => {
+    static getAuthTokenFromBrowser = (): string | null => {
+        if (typeof document === "undefined") return null; // Guard for SSR
         const name = "authToken=";
         const decodedCookies = decodeURIComponent(document.cookie).split(";");
         for (let cookie of decodedCookies) {
@@ -72,7 +90,7 @@ class BackendService {
             }
         }
         return null;
-    }
+    };
 }
 
 export const APIClient = BackendService;

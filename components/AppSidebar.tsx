@@ -10,69 +10,40 @@ import {
 } from "@/components/ui/sidebar";
 import { useTransfer } from "@/contexts/TransferCcontext";
 import Link from "next/link";
+import { ReactNode } from "react";
+
+interface LinkMenuButtonProps {
+  href: string;
+  name: string;
+}
+
+interface SidebarGroupProps {
+  title: string;
+  children?: ReactNode;
+}
 
 export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarMenu>
-            <LinkMenuButton href="/" name="Home" />
-          </SidebarMenu>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>News</SidebarGroupLabel>
-          <SidebarMenu>
-            <LinkMenuButton href="/news" name="Insights" />
-            <LinkMenuButton href="/news/create" name="Create Insight" />
-          </SidebarMenu>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>News category</SidebarGroupLabel>
-          <SidebarMenu>
-            <LinkMenuButton href="/category" name="Categories" />
-          </SidebarMenu>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Forums</SidebarGroupLabel>
-          <SidebarMenu>
-            <LinkMenuButton href="/forums" name="Forums" />
-          </SidebarMenu>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Reports & Feedbacks</SidebarGroupLabel>
-          <SidebarMenu>
-            <LinkMenuButton href="/reports" name="Reports (forums)" />
-            <LinkMenuButton href="/feedback" name="Feedbacks" />
-          </SidebarMenu>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Logs & Activities</SidebarGroupLabel>
-          <SidebarMenu>
-            <LinkMenuButton href="/activities" name="Activities" />
-            <LinkMenuButton href="/logs" name="Logs" />
-          </SidebarMenu>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Wordle</SidebarGroupLabel>
-          <SidebarMenu>
-            <LinkMenuButton href="/wordle" name="Words" />
-            <LinkMenuButton href="/wordle/create" name="Create Word" />
-          </SidebarMenu>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Notification</SidebarGroupLabel>
-          <SidebarMenu>
-            <LinkMenuButton href="/notification" name="Send Notification" />
-          </SidebarMenu>
-        </SidebarGroup>
+        <SidebarGrp title="Application">
+          <LinkMenuButton href="/" name="Home" />
+        </SidebarGrp>
       </SidebarContent>
     </Sidebar>
   );
 }
 
-function LinkMenuButton({ href, name }: { href: string; name: string }) {
+function SidebarGrp({ title, children }: SidebarGroupProps) {
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel>{title}</SidebarGroupLabel>
+      <SidebarMenu>{children}</SidebarMenu>
+    </SidebarGroup>
+  );
+}
+
+function LinkMenuButton({ href, name }: LinkMenuButtonProps) {
   const { setData } = useTransfer();
 
   return (

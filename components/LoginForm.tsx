@@ -3,6 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { ReactElement, useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,25 +23,23 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
 import PleaseWait from "./PleaseWait";
 import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
-import { toast } from "sonner";
 
+// Zod schema definition
 const formSchema = z.object({
   email: z
     .string()
     .min(3, { message: "Username should be greater than 3 characters" })
-    .max(50, {
-      message: "Username cannot be greater than 50 characters",
-    }),
-  password: z.string(),
+    .max(50, { message: "Username cannot be greater than 50 characters" }),
+  password: z.string().min(1, { message: "Password is required" }),
 });
 
-export default function LoginForm() {
+// Component definition
+export default function LoginForm(): ReactElement {
   const { setAuthToken } = useAuthToken();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,16 +49,21 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (
+    values: z.infer<typeof formSchema>
+  ): Promise<void> => {
     setLoading(true);
 
     const client = new APIClient(null);
     const result = await client.fetch("POST", "/login", values);
+
     if (result.ok) {
       toast("Login success", { description: result.json.message });
       setAuthToken(result.json.auth_token);
       APIClient.setAuthTokenInBrowser(result.json.auth_token);
-    } else toast("Login failed", { description: result.json.message });
+    } else {
+      toast("Login failed", { description: result.json.message });
+    }
 
     setLoading(false);
   };
@@ -93,13 +98,18 @@ export default function LoginForm() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="admin-password" {...field} />
+                      <Input
+                        placeholder="admin-password"
+                        type="password"
+                        {...field}
+                      />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
               <Button type="submit" disabled={loading}>
-                {loading ? <PleaseWait /> : <p>Submit</p>}
+                {loading ? <PleaseWait /> : <span>Submit</span>}
               </Button>
             </CardContent>
             <CardFooter>

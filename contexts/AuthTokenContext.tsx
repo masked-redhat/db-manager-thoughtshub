@@ -8,17 +8,24 @@ import {
   Dispatch,
   SetStateAction,
   useCallback,
+  FC,
 } from "react";
 
+// Define the shape of the Auth context
 type AuthContextType = {
   authToken: string | null;
   setAuthToken: Dispatch<SetStateAction<string | null>>;
   reset: () => void;
 };
 
-const AuthTokenContext = createContext<AuthContextType | null>(null);
+// Create the context with an undefined default value
+const AuthTokenContext = createContext<AuthContextType | undefined>(undefined);
+AuthTokenContext.displayName = "AuthTokenContext";
 
-export function AuthTokenProvider({ children }: { children: ReactNode }) {
+// Create the provider component
+export const AuthTokenProvider: FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [authToken, setAuthToken] = useState<string | null>(null);
   const reset = useCallback(() => setAuthToken(null), []);
 
@@ -27,12 +34,13 @@ export function AuthTokenProvider({ children }: { children: ReactNode }) {
       {children}
     </AuthTokenContext.Provider>
   );
-}
+};
 
-export function useAuthToken() {
+// Custom hook to use the auth token context
+export const useAuthToken = (): AuthContextType => {
   const context = useContext(AuthTokenContext);
-  if (!context) {
-    throw new Error("useAuthToken must be used within AuthTokenProvider");
+  if (context === undefined) {
+    throw new Error("useAuthToken must be used within an AuthTokenProvider");
   }
   return context;
-}
+};

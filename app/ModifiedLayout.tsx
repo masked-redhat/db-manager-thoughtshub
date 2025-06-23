@@ -1,5 +1,8 @@
 "use client";
 
+import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { Toaster } from "sonner";
+
 import { AppSidebar } from "@/components/AppSidebar";
 import LoginForm from "@/components/LoginForm";
 import LogoutBtn from "@/components/LogoutBtn";
@@ -8,28 +11,31 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { APIClient } from "@/services/BackendService";
-import { ReactNode, useEffect, useState } from "react";
-import { Toaster } from "sonner";
+
+interface LayoutProps {
+  children: ReactNode;
+}
 
 export default function Layout_({
   children,
-}: Readonly<{ children: ReactNode }>) {
+}: Readonly<LayoutProps>): ReactElement {
   const { authToken, setAuthToken } = useAuthToken();
-  const [checking, setChecking] = useState(false);
+  const [checking, setChecking] = useState<boolean>(false);
 
   useEffect(() => {
-    const checkAndSetAuthToken = async () => {
+    const checkAndSetAuthToken = async (): Promise<void> => {
       setChecking(true);
-
-      const authToken = APIClient.getAuthTokenFromBrowser();
-      const client = new APIClient(authToken);
+      const storedToken = APIClient.getAuthTokenFromBrowser();
+      const client = new APIClient(storedToken);
       const isOk = await client.checkAuthToken();
-      if (isOk) setAuthToken(authToken);
-
+      if (isOk) {
+        setAuthToken(storedToken);
+      }
       setChecking(false);
     };
+
     checkAndSetAuthToken();
-  }, []);
+  }, [setAuthToken]);
 
   return (
     <div className="w-full h-full">
@@ -45,7 +51,7 @@ export default function Layout_({
           <main className="w-full">
             <div className="border-b border-b-gray-300 flex justify-between items-center p-2 sticky top-0 z-50 bg-gray-50">
               <div className="flex gap-2 items-center">
-                <SidebarTrigger size={"lg"} />
+                <SidebarTrigger size="lg" />
                 <Separator
                   orientation="vertical"
                   className="bg-gray-600 h-[12px!important]"
@@ -56,7 +62,9 @@ export default function Layout_({
               </div>
               <LogoutBtn />
             </div>
-            <div className="w-full h-[calc(100%-3.3rem)] md:pb-5 pb-3">{children}</div>
+            <div className="w-full h-[calc(100%-3.3rem)] md:p-3 p-2 !pr-0">
+              {children}
+            </div>
           </main>
         </SidebarProvider>
       )}
