@@ -50,7 +50,7 @@ function LinkMenuButton({ href, name }: LinkMenuButtonProps) {
     <SidebarMenuButton className="p-[0px!important]">
       <Link
         href={href}
-        className="w-full h-full flex items-center p-2 font-manrope font-medium tracking-wide"
+        className="w-full h-full flex items-center p-2 font-medium tracking-wide"
         onClick={() => {
           setData(null);
         }}

@@ -41,7 +41,9 @@ export default function Layout_({
     <div className="w-full h-full">
       {authToken === null ? (
         checking ? (
-          <PleaseWait />
+          <div className="w-screen h-screen flex items-center justify-center">
+            <PleaseWait />
+          </div>
         ) : (
           <LoginForm />
         )
@@ -54,9 +56,9 @@ export default function Layout_({
                 <SidebarTrigger size="lg" />
                 <Separator
                   orientation="vertical"
-                  className="bg-gray-600 h-[12px!important]"
+                  className="bg-gray-600 h-[14px!important]"
                 />
-                <p className="font-black font-urban">
+                <p className="font-bold tracking-wide pt-0.5 pl-1">
                   Admin Panel - ThoughtsHub
                 </p>
               </div>
