@@ -73,7 +73,7 @@ class BackendService {
     static setAuthTokenInBrowser = (authToken: string): void => {
         if (typeof document === "undefined") return; // Guard for SSR
         const expires = new Date();
-        expires.setTime(expires.getTime() + 1000 * 24 * 60 * 60 * 1000); // ~1000 days
+        expires.setTime(expires.getTime() + 1 * 60 * 60 * 1000); // ~1 Hour
         document.cookie = `authToken=${encodeURIComponent(
             authToken
         )}; expires=${expires.toUTCString()}; path=/`;
