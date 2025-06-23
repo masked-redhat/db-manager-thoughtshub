@@ -4,39 +4,43 @@ import {
   createContext,
   useContext,
   useState,
+  useCallback,
   ReactNode,
   Dispatch,
   SetStateAction,
-  useCallback,
+  useMemo,
   FC,
 } from "react";
+import { APIClient as BackendAPIClient } from "@/services/BackendService";
 
-// Define the shape of the Auth context
 type AuthContextType = {
   authToken: string | null;
   setAuthToken: Dispatch<SetStateAction<string | null>>;
   reset: () => void;
+  client: InstanceType<typeof BackendAPIClient>;
 };
 
-// Create the context with an undefined default value
 const AuthTokenContext = createContext<AuthContextType | undefined>(undefined);
 AuthTokenContext.displayName = "AuthTokenContext";
 
-// Create the provider component
 export const AuthTokenProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [authToken, setAuthToken] = useState<string | null>(null);
   const reset = useCallback(() => setAuthToken(null), []);
 
+  // Memoize client to only recreate when authToken changes
+  const client = useMemo(() => new BackendAPIClient(authToken), [authToken]);
+
   return (
-    <AuthTokenContext.Provider value={{ authToken, setAuthToken, reset }}>
+    <AuthTokenContext.Provider
+      value={{ authToken, setAuthToken, reset, client }}
+    >
       {children}
     </AuthTokenContext.Provider>
   );
 };
 
-// Custom hook to use the auth token context
 export const useAuthToken = (): AuthContextType => {
   const context = useContext(AuthTokenContext);
   if (context === undefined) {

@@ -85,7 +85,11 @@ export default function LoginForm(): ReactElement {
                   <FormItem>
                     <FormLabel>Username</FormLabel>
                     <FormControl>
-                      <Input placeholder="admin-username" {...field} />
+                      <Input
+                        placeholder="admin-username"
+                        autoComplete="username"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -101,6 +105,7 @@ export default function LoginForm(): ReactElement {
                       <Input
                         placeholder="admin-password"
                         type="password"
+                        autoComplete="current-password"
                         {...field}
                       />
                     </FormControl>

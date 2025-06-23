@@ -1,3 +1,21 @@
+export const PATH = {
+    insight: "/news",
+    categories: "/categories",
+    category: "/category",
+    forum: "/forums",
+    forumAppreciation: "/forums/appreciation",
+    forumComment: "/forums/comments",
+    user: "/users",
+    reportForum: "/report/forums",
+    feedback: "/feedback",
+    log: "/logs",
+    activity: "/activity",
+    imageConfig: "/upload-max-size-image-change",
+    wordle: "/wordle",
+    wordleWord: "/wordle/words",
+    notification: "/notify"
+}
+
 class BackendService {
     static baseUrl = "https://api.thoughtshub.agency";
 
@@ -6,8 +24,15 @@ class BackendService {
     fetch = async (
         requestType: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD",
         pathname: string,
-        body: Record<string, unknown> | null = null
+        body: Record<string, unknown> | null = null,
+        query: Record<string, unknown> | null = null
     ): Promise<{ ok: boolean; json: any }> => {
+        let queries = "";
+        for (const q in query)
+            queries += `${q}=${query[q]}`
+        queries = encodeURIComponent(queries);
+        pathname = pathname + (queries.length === 0 ? "" : `?${queries}`)
+
         try {
             const response = await fetch(BackendService.url(pathname), {
                 method: requestType,
@@ -52,9 +77,10 @@ class BackendService {
     fetchAdmin = async (
         requestType: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD",
         pathname: string,
-        body: Record<string, unknown> | null = null
+        body: Record<string, unknown> | null = null,
+        query: Record<string, unknown> | null = null
     ): Promise<{ ok: boolean; json: any }> => {
-        return this.fetch(requestType, `/admin${pathname}`, body);
+        return this.fetch(requestType, `/admin${pathname}`, body, query);
     };
 
     checkAuthToken = async (): Promise<boolean> => {

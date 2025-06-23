@@ -1,19 +1,16 @@
 import { ReactElement, useCallback, useState } from "react";
 import { toast } from "sonner";
-
 import { useAuthToken } from "@/contexts/AuthTokenContext";
-import { APIClient } from "@/services/BackendService";
 import { Button } from "./ui/button";
 import PleaseWait from "./PleaseWait";
 
 export default function LogoutBtn(): ReactElement {
-  const { reset, authToken } = useAuthToken();
+  const { reset, client } = useAuthToken();
   const [loading, setLoading] = useState<boolean>(false);
 
   const onClick = useCallback(async (): Promise<void> => {
     setLoading(true);
 
-    const client = new APIClient(authToken);
     const result = await client.fetch("GET", "/logout");
 
     if (result.ok) {
@@ -24,7 +21,7 @@ export default function LogoutBtn(): ReactElement {
     }
 
     setLoading(false);
-  }, [authToken, reset]);
+  }, [reset, client]);
 
   return (
     <Button disabled={loading} onClick={onClick} aria-busy={loading}>
