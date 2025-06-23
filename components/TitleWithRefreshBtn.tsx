@@ -26,10 +26,20 @@ export default function TitleWithRefreshBtn({
   );
 }
 
-export function Title({ title }: { title: string }) {
+export function Title({
+  title,
+  className,
+}: {
+  title: string;
+  className?: string;
+}) {
   return (
-    <div className="flex gap-4 items-center w-fit select-none">
-      <h1 className="font-semibold font-urban md:text-3xl text-xl">{title}</h1>
+    <div className="flex gap-4 items-center w-fit select-none font-semibold font-urban">
+      <h1
+        className={className ?? "md:text-3xl text-xl"}
+      >
+        {title}
+      </h1>
     </div>
   );
 }

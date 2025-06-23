@@ -61,6 +61,12 @@ export function AppSidebar() {
             <LinkMenuButton href="/wordle/create" name="Create Word" />
           </SidebarMenu>
         </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Notification</SidebarGroupLabel>
+          <SidebarMenu>
+            <LinkMenuButton href="/notification" name="Send Notification" />
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
     </Sidebar>
   );
