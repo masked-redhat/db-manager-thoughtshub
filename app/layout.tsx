@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-fira antialiased h-screen">
+      <body className="font-mont antialiased h-screen">
         <Providers>
           <Layout_>{children}</Layout_>
         </Providers>

@@ -3,10 +3,10 @@
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { Toaster } from "sonner";
 
-import { AppSidebar } from "@/components/AppSidebar";
-import LoginForm from "@/components/LoginForm";
+import { AppSidebar } from "@/components/global/AppSidebar";
+import LoginForm from "@/components/global/LoginForm";
 import LogoutBtn from "@/components/LogoutBtn";
-import PleaseWait from "@/components/PleaseWait";
+import PleaseWait from "@/components/global/PleaseWait";
 import { Separator } from "@/components/ui/separator";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useAuthToken } from "@/contexts/AuthTokenContext";
@@ -15,6 +15,8 @@ import { APIClient } from "@/services/BackendService";
 interface LayoutProps {
   children: ReactNode;
 }
+
+const skipChecking = true; // for development purposes
 
 export default function Layout_({
   children,
@@ -39,38 +41,48 @@ export default function Layout_({
 
   return (
     <div className="w-full h-full">
-      {authToken === null ? (
-        checking ? (
-          <div className="w-screen h-screen flex items-center justify-center">
-            <PleaseWait />
-          </div>
+      {!skipChecking ? (
+        authToken === null ? (
+          checking ? (
+            <div className="w-screen h-screen flex items-center justify-center">
+              <PleaseWait />
+            </div>
+          ) : (
+            <LoginForm />
+          )
         ) : (
-          <LoginForm />
+          <MainContent>{children}</MainContent>
         )
       ) : (
-        <SidebarProvider>
-          <AppSidebar />
-          <main className="w-full">
-            <div className="border-b border-b-gray-300 flex justify-between items-center p-2 sticky top-0 z-50 bg-gray-50">
-              <div className="flex gap-2 items-center">
-                <SidebarTrigger size="lg" />
-                <Separator
-                  orientation="vertical"
-                  className="bg-gray-600 h-[14px!important]"
-                />
-                <p className="font-bold tracking-wide pt-0.5 pl-1">
-                  Admin Panel - ThoughtsHub
-                </p>
-              </div>
-              <LogoutBtn />
-            </div>
-            <div className="w-full h-[calc(100%-3.3rem)] md:p-3 p-2 !pr-0">
-              {children}
-            </div>
-          </main>
-        </SidebarProvider>
+        <MainContent>{children}</MainContent>
       )}
       <Toaster />
     </div>
   );
 }
+
+const MainContent = ({ children }: { children: ReactNode }): ReactElement => {
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <main className="w-full">
+        <div className="border-b border-b-gray-300 flex justify-between items-center p-2 sticky top-0 z-50 bg-gray-50">
+          <div className="flex gap-2 items-center">
+            <SidebarTrigger size="lg" />
+            <Separator
+              orientation="vertical"
+              className="bg-gray-600 h-[14px!important]"
+            />
+            <p className="font-bold tracking-wide pt-0.5 pl-1">
+              Admin Panel - ThoughtsHub
+            </p>
+          </div>
+          <LogoutBtn />
+        </div>
+        <div className="w-full h-[calc(100%-3.3rem)] md:p-4 p-2 !pr-0">
+          {children}
+        </div>
+      </main>
+    </SidebarProvider>
+  );
+};

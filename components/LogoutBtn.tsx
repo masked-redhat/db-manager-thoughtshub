@@ -2,7 +2,7 @@ import { ReactElement, useCallback, useState } from "react";
 import { toast } from "sonner";
 import { useAuthToken } from "@/contexts/AuthTokenContext";
 import { Button } from "./ui/button";
-import PleaseWait from "./PleaseWait";
+import PleaseWait from "./global/PleaseWait";
 
 export default function LogoutBtn(): ReactElement {
   const { reset, client } = useAuthToken();

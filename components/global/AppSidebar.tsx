@@ -27,7 +27,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGrp title="Application">
-          <LinkMenuButton href="/" name="Home" />
+          <LinkMenuButton href="/" name="Dashboard" />
         </SidebarGrp>
       </SidebarContent>
     </Sidebar>
