@@ -7,3 +7,11 @@ export interface SignupsData {
         signups: number;
     }[]
 }
+
+export interface UsersNumbersData {
+    totalUsers: number;
+    activeUsersWithin7Days: number;
+    activeUsersWithin30Days?: number;
+    totalAccountsDeleted?: number;
+    lifetimeTotalUsers?: number;
+}

@@ -79,7 +79,7 @@ const MainContent = ({ children }: { children: ReactNode }): ReactElement => {
           </div>
           <LogoutBtn />
         </div>
-        <div className="w-full h-[calc(100%-3.3rem)] md:p-4 p-2 !pr-0">
+        <div className="w-full h-[calc(100%-3.3rem)] md:p-5 p-3">
           {children}
         </div>
       </main>

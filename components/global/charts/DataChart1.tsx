@@ -4,26 +4,26 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { graphType } from "@/constants/graphTypes";
-import { SignupsData } from "@/interfaces/UserAccounts";
+import { GraphType, graphType } from "@/constants/graphTypes";
 import { ReactElement } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 interface SignupsProps {
   className?: string;
-  data: SignupsData;
+  data: { rangeType: GraphType; data: Record<string, number>[] };
+  chartConfig: ChartConfig;
+  XaxisDatakey: string;
+  Datakey: string;
+  strokeColor: string;
 }
 
-const chartConfig = {
-  signups: {
-    label: "Signups",
-    color: "#60a5fa",
-  },
-} satisfies ChartConfig;
-
-export const SignupsChart = ({
+export const DataChart1 = ({
   className = "",
   data,
+  chartConfig,
+  XaxisDatakey,
+  Datakey,
+  strokeColor,
 }: SignupsProps): ReactElement => {
   return (
     <div className={className}>
@@ -45,7 +45,7 @@ export const SignupsChart = ({
             domain={["dataMin ", "dataMax + 3"]}
           />
           <XAxis
-            dataKey="datetime"
+            dataKey={XaxisDatakey}
             tickLine={false}
             tick={{ textAnchor: "middle" }}
             tickMargin={10}
@@ -62,11 +62,14 @@ export const SignupsChart = ({
           />
           <ChartTooltip content={<ChartTooltipContent />} />
           <Area
-            dataKey="signups"
-            type="linear"
+            dataKey={Datakey}
+            type="monotoneX"
             fillOpacity={0}
-            stroke="#60a5fa"
-            strokeWidth={1.8}
+            stroke={strokeColor}
+            strokeWidth={2.8}
+            label={"none"}
+            isAnimationActive={false}
+            animationDuration={0}
           />
         </AreaChart>
       </ChartContainer>
