@@ -42,7 +42,7 @@ export const DataChart1 = ({
             width={35}
             tickLine={false}
             axisLine={{ stroke: "#ccc" }}
-            domain={["dataMin ", "dataMax + 3"]}
+            domain={["dataMin - 3", "dataMax + 40"]}
           />
           <XAxis
             dataKey={XaxisDatakey}

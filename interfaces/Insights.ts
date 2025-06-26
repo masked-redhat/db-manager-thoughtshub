@@ -1,9 +1,13 @@
 import { GraphType } from "@/constants/graphTypes";
 
 export interface InsightsUploadedData {
-    rangeType: GraphType,
+    rangeType: GraphType;
     data: {
-        datetime: number,
-        insightsUploaded: number
+        datetime: number;
+        insightsUploaded: number;
     }[]
+}
+
+export interface InsightsNumbersData {
+    totalInsights: number;
 }

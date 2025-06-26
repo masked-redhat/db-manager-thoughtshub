@@ -8,10 +8,18 @@ export interface SignupsData {
     }[]
 }
 
+export interface TotalUsersData {
+    rangeType: GraphType;
+    data: {
+        datetime: number;
+        users: number;
+    }[]
+}
+
 export interface UsersNumbersData {
-    totalUsers: number;
-    activeUsersWithin7Days: number;
-    activeUsersWithin30Days?: number;
-    totalAccountsDeleted?: number;
-    lifetimeTotalUsers?: number;
+    totalLifetimeUsers: number;
+    currentUsers: number;
+    currentlyOnline: number;
+    activeUsers: number;
+    signupsInLast24Hours: number;
 }
