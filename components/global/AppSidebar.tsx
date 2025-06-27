@@ -3,43 +3,26 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarMenu,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
 import { useTransfer } from "@/contexts/TransferCcontext";
 import Link from "next/link";
-import { ReactNode } from "react";
 
 interface LinkMenuButtonProps {
   href: string;
   name: string;
 }
 
-interface SidebarGroupProps {
-  title: string;
-  children?: ReactNode;
-}
-
 export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
-        <SidebarGrp title="Application">
+        <div className="flex flex-col gap-2.5 py-4 px-2">
           <LinkMenuButton href="/" name="Dashboard" />
-        </SidebarGrp>
+          <LinkMenuButton href="/insights" name="Insights" />
+        </div>
       </SidebarContent>
     </Sidebar>
-  );
-}
-
-function SidebarGrp({ title, children }: SidebarGroupProps) {
-  return (
-    <SidebarGroup>
-      <SidebarGroupLabel>{title}</SidebarGroupLabel>
-      <SidebarMenu>{children}</SidebarMenu>
-    </SidebarGroup>
   );
 }
 

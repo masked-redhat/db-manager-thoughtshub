@@ -11,3 +11,14 @@ export interface InsightsUploadedData {
 export interface InsightsNumbersData {
     totalInsights: number;
 }
+
+export interface Insight {
+    id: string;
+    createDate: number;
+    updateDate: number;
+    imageUrl: string | null;
+    title: string | null;
+    body: string | null;
+    category: string | null;
+    status: "Published" | "On Review" | "Draft"
+}

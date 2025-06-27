@@ -16,7 +16,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const skipChecking = true; // for development purposes
+const skipChecking = false; // for development purposes
 
 export default function Layout_({
   children,

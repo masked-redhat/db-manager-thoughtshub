@@ -30,7 +30,6 @@ class BackendService {
         let queries = "";
         for (const q in query)
             queries += `${q}=${query[q]}`
-        queries = encodeURIComponent(queries);
         pathname = pathname + (queries.length === 0 ? "" : `?${queries}`)
 
         try {

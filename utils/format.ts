@@ -19,3 +19,22 @@ export function formatNumber(num: number): string {
     }
     return num.toString();
 }
+
+
+export const formatDatetime = (ts: number, locale: string = 'en-IN'): string => {
+    const opts: Intl.DateTimeFormatOptions = {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,        // 24-hour clock
+        timeZone: 'Asia/Kolkata'
+    };
+
+    // Intl.DateTimeFormat gives us exactly what we need,
+    // we just strip the comma after the year (if any).
+    return new Intl.DateTimeFormat(locale, opts)
+        .format(new Date(ts))
+        .replace(',', '');
+}
