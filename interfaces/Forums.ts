@@ -8,22 +8,6 @@ export interface ForumsUploadedData {
     }[];
 }
 
-export interface ForumsLikedData {
-    rangeType: GraphType;
-    data: {
-        datetime: number;
-        forumsLiked: number;
-    }[];
-}
-
-export interface ForumsCommentedData {
-    rangeType: GraphType;
-    data: {
-        datetime: number;
-        forumsCommented: number;
-    }[];
-}
-
 export interface ForumsNumbersData {
     totalForums: number;
 }
